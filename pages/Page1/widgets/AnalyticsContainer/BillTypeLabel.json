@@ -1,0 +1,37 @@
+{
+  "animateLoading": true,
+  "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+  "bottomRow": 12,
+  "boxShadow": "none",
+  "dynamicBindingPathList": [
+    {
+      "key": "fontFamily"
+    }
+  ],
+  "dynamicTriggerPathList": [],
+  "fontFamily": "{{appsmith.theme.fontFamily.appFont}}",
+  "fontSize": "0.875rem",
+  "fontStyle": "BOLD",
+  "isLoading": false,
+  "isVisible": true,
+  "key": "txt_bill_lbl",
+  "leftColumn": 23,
+  "mobileBottomRow": 12,
+  "mobileLeftColumn": 23,
+  "mobileRightColumn": 33,
+  "mobileTopRow": 9,
+  "parentColumnSpace": 15,
+  "parentId": "p8i5977oez",
+  "parentRowSpace": 10,
+  "renderMode": "CANVAS",
+  "rightColumn": 33,
+  "shouldTruncate": false,
+  "text": "Bill Type",
+  "textAlign": "LEFT",
+  "textColor": "#94a3b8",
+  "topRow": 9,
+  "type": "TEXT_WIDGET",
+  "version": 1,
+  "widgetId": "3j0ase1gju",
+  "widgetName": "BillTypeLabel"
+}

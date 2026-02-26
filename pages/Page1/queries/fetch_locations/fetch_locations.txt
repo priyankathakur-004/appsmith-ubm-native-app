@@ -1,0 +1,4 @@
+SELECT DISTINCT m.location_id, m.location_description
+FROM bill_management_v2.reports_customer_monthly_usage m
+WHERE m.location_description IS NOT NULL
+ORDER BY m.location_description

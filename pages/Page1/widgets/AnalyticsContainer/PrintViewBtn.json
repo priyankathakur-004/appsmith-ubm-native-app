@@ -1,0 +1,45 @@
+{
+  "animateLoading": true,
+  "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+  "bottomRow": 6,
+  "boxShadow": "none",
+  "buttonColor": "transparent",
+  "buttonVariant": "TERTIARY",
+  "disabledWhenInvalid": false,
+  "dynamicBindingPathList": [
+    {
+      "key": "borderRadius"
+    }
+  ],
+  "dynamicTriggerPathList": [
+    {
+      "key": "onClick"
+    }
+  ],
+  "isDefaultClickDisabled": true,
+  "isDisabled": false,
+  "isLoading": false,
+  "isVisible": true,
+  "key": "btn_print",
+  "leftColumn": 40,
+  "minWidth": 120,
+  "mobileBottomRow": 6,
+  "mobileLeftColumn": 40,
+  "mobileRightColumn": 47,
+  "mobileTopRow": 3,
+  "onClick": "{{FilterActions.printView()}}",
+  "parentColumnSpace": 15,
+  "parentId": "p8i5977oez",
+  "parentRowSpace": 10,
+  "placement": "CENTER",
+  "renderMode": "CANVAS",
+  "responsiveBehavior": "hug",
+  "rightColumn": 47,
+  "text": "Print View",
+  "textColor": "#60a5fa",
+  "topRow": 3,
+  "type": "BUTTON_WIDGET",
+  "version": 1,
+  "widgetId": "uoez348t7u",
+  "widgetName": "PrintViewBtn"
+}

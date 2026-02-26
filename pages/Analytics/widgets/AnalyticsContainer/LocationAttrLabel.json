@@ -1,0 +1,36 @@
+{
+  "animateLoading": true,
+  "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+  "bottomRow": 18,
+  "boxShadow": "none",
+  "dynamicBindingPathList": [
+    {
+      "key": "fontFamily"
+    }
+  ],
+  "dynamicTriggerPathList": [],
+  "fontFamily": "{{appsmith.theme.fontFamily.appFont}}",
+  "fontSize": "0.875rem",
+  "fontStyle": "BOLD",
+  "isLoading": false,
+  "isVisible": true,
+  "key": "txt_locattr_lbl",
+  "leftColumn": 17,
+  "mobileBottomRow": 9,
+  "mobileLeftColumn": 33,
+  "mobileRightColumn": 43,
+  "mobileTopRow": 6,
+  "parentColumnSpace": 15,
+  "parentId": "b8l49xalbh",
+  "parentRowSpace": 10,
+  "renderMode": "CANVAS",
+  "rightColumn": 32,
+  "text": "Location Attribute",
+  "textAlign": "LEFT",
+  "textColor": "#94a3b8",
+  "topRow": 15,
+  "type": "TEXT_WIDGET",
+  "version": 1,
+  "widgetId": "ikfg9mued0",
+  "widgetName": "LocationAttrLabel"
+}

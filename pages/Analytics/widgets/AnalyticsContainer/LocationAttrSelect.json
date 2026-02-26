@@ -1,0 +1,50 @@
+{
+  "accentColor": "{{appsmith.theme.colors.primaryColor}}",
+  "animateLoading": true,
+  "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+  "bottomRow": 23,
+  "boxShadow": "none",
+  "defaultOptionValue": "All",
+  "dynamicBindingPathList": [
+    {
+      "key": "sourceData"
+    },
+    {
+      "key": "borderRadius"
+    }
+  ],
+  "dynamicPropertyPathList": [
+    {
+      "key": "sourceData"
+    }
+  ],
+  "dynamicTriggerPathList": [
+    {
+      "key": "onOptionChange"
+    }
+  ],
+  "isFilterable": true,
+  "isLoading": false,
+  "isVisible": true,
+  "key": "sel_locattr",
+  "labelText": "",
+  "leftColumn": 17,
+  "mobileBottomRow": 14,
+  "mobileLeftColumn": 33,
+  "mobileRightColumn": 43,
+  "mobileTopRow": 9,
+  "onOptionChange": "{{FilterActions.onLocationAttrChange()}}",
+  "optionLabel": "label",
+  "optionValue": "value",
+  "parentColumnSpace": 15,
+  "parentId": "b8l49xalbh",
+  "parentRowSpace": 10,
+  "renderMode": "CANVAS",
+  "rightColumn": 32,
+  "sourceData": "{{ (fetch_location_attributes.data || []).map(d => ({\n  label: d.attribute_name,\n  value: d.attribute_name\n})) }}\n",
+  "topRow": 18,
+  "type": "SELECT_WIDGET",
+  "version": 1,
+  "widgetId": "m9dejoxzyk",
+  "widgetName": "LocationAttrSelect"
+}

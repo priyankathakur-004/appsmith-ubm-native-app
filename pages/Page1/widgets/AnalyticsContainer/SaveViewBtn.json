@@ -1,0 +1,45 @@
+{
+  "animateLoading": true,
+  "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+  "bottomRow": 6,
+  "boxShadow": "none",
+  "buttonColor": "transparent",
+  "buttonVariant": "TERTIARY",
+  "disabledWhenInvalid": false,
+  "dynamicBindingPathList": [
+    {
+      "key": "borderRadius"
+    }
+  ],
+  "dynamicTriggerPathList": [
+    {
+      "key": "onClick"
+    }
+  ],
+  "isDefaultClickDisabled": true,
+  "isDisabled": false,
+  "isLoading": false,
+  "isVisible": true,
+  "key": "btn_save",
+  "leftColumn": 47,
+  "minWidth": 120,
+  "mobileBottomRow": 6,
+  "mobileLeftColumn": 47,
+  "mobileRightColumn": 54,
+  "mobileTopRow": 3,
+  "onClick": "{{FilterActions.saveView()}}",
+  "parentColumnSpace": 15,
+  "parentId": "p8i5977oez",
+  "parentRowSpace": 10,
+  "placement": "CENTER",
+  "renderMode": "CANVAS",
+  "responsiveBehavior": "hug",
+  "rightColumn": 54,
+  "text": "Save View",
+  "textColor": "#60a5fa",
+  "topRow": 3,
+  "type": "BUTTON_WIDGET",
+  "version": 1,
+  "widgetId": "6wx301fbs8",
+  "widgetName": "SaveViewBtn"
+}

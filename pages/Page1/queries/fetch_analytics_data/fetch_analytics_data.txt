@@ -1,0 +1,15 @@
+SELECT 
+    m.customer_id,
+    m.time_period,
+    m.utility_type,
+    m.bill_type,
+    m.location_id,
+    m.location_description,
+    m.square_feet,
+    CASE WHEN m.bill_type = 'Supply Only' THEN m.total_gen_consumption ELSE m.total_consumption END AS consumption,
+    m.total_consumption_uom,
+    m.total_charges
+FROM bill_management_v2.reports_customer_monthly_usage m
+INNER JOIN bill_management_v2.locations l ON l.id = m.location_id
+WHERE 1=1
+ORDER BY m.location_description, m.time_period DESC

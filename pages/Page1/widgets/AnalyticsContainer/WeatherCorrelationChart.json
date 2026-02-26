@@ -1,0 +1,45 @@
+{
+  "animateLoading": true,
+  "backgroundColor": "#1e293b",
+  "borderColor": "#334155",
+  "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+  "bottomRow": 120,
+  "boxShadow": "none",
+  "chartType": "CUSTOM_ECHART",
+  "customEChartConfig": "{{WeatherHelper.getCorrelationConfig()}}",
+  "dynamicBindingPathList": [
+    {
+      "key": "customEChartConfig"
+    },
+    {
+      "key": "isVisible"
+    },
+    {
+      "key": "borderRadius"
+    }
+  ],
+  "dynamicPropertyPathList": [
+    {
+      "key": "isVisible"
+    }
+  ],
+  "dynamicTriggerPathList": [],
+  "isLoading": false,
+  "isVisible": "{{ReportSelect.selectedOptionValue === 'weather'}}",
+  "key": "cht_correlation",
+  "leftColumn": 0,
+  "mobileBottomRow": 120,
+  "mobileLeftColumn": 0,
+  "mobileRightColumn": 22,
+  "mobileTopRow": 57,
+  "parentColumnSpace": 15,
+  "parentId": "p8i5977oez",
+  "parentRowSpace": 10,
+  "renderMode": "CANVAS",
+  "rightColumn": 22,
+  "topRow": 57,
+  "type": "CHART_WIDGET",
+  "version": 1,
+  "widgetId": "h9cqwaj2a6",
+  "widgetName": "WeatherCorrelationChart"
+}
