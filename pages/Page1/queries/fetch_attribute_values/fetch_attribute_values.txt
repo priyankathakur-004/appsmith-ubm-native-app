@@ -1,5 +1,0 @@
-SELECT DISTINCT cla.attribute_value
-FROM bill_management_v2.custom_location_attributes cla
-WHERE cla.attribute_name = '{{LocationAttrSelect.selectedOptionValue}}'
-AND cla.attribute_value IS NOT NULL
-ORDER BY cla.attribute_value

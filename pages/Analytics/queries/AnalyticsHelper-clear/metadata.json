@@ -1,6 +1,6 @@
 {
-  "gitSyncId": "68f08f3128a92f6fcd2cb504_52e8e282-bb2c-4aae-b3c5-e93006f0ead1",
-  "id": "Analytics_AnalyticsHelper.getTableData",
+  "gitSyncId": "68f08f3128a92f6fcd2cb504_fa565f77-2ffa-46ca-ad83-88de8cbaa406",
+  "id": "Analytics_AnalyticsHelper.clear",
   "pluginId": "js-plugin",
   "pluginType": "JS",
   "unpublishedAction": {
@@ -10,7 +10,6 @@
       "paginationType": "NONE",
       "timeoutInMillisecond": 10000
     },
-    "clientSideExecution": true,
     "collectionId": "Analytics_AnalyticsHelper",
     "confirmBeforeExecute": false,
     "datasource": {
@@ -23,10 +22,10 @@
         "key": "body"
       }
     ],
-    "fullyQualifiedName": "AnalyticsHelper.getTableData",
-    "name": "getTableData",
+    "fullyQualifiedName": "AnalyticsHelper.clear",
+    "name": "clear",
     "pageId": "Analytics",
-    "runBehaviour": "MANUAL",
-    "userSetOnLoad": false
+    "runBehaviour": "AUTOMATIC",
+    "userSetOnLoad": true
   }
 }

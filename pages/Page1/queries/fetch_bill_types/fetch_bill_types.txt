@@ -1,4 +1,0 @@
-SELECT DISTINCT m.bill_type
-FROM bill_management_v2.reports_customer_monthly_usage m
-WHERE m.bill_type IS NOT NULL
-ORDER BY m.bill_type

@@ -5,19 +5,21 @@ SELECT
     m.bill_type,
     m.location_id,
     m.location_description,
-		l.address,
-		l.state,
-		l.city,
-		l.square_feet,
+        l.address,
+        l.state,
+        l.city,
+        l.square_feet,
 
     CASE 
         WHEN m.bill_type = 'Supply Only' 
         THEN m.total_gen_consumption 
         ELSE m.total_consumption 
     END AS consumption,
-
     m.total_consumption_uom,
-    m.total_charges
+    m.total_charges,
+        m.total_cdd,
+    m.total_hdd,
+    m.total_dd
 
 FROM bill_management_v2.reports_customer_monthly_usage m
 INNER JOIN bill_management_v2.locations l 
@@ -26,11 +28,11 @@ INNER JOIN bill_management_v2.locations l
 WHERE 1=1
 
 {{ CustomerSelect.selectedOptionValue ?
-	`AND m.customer_id = '${CustomerSelect.selectedOptionValue}'`
+    `AND m.customer_id = '${CustomerSelect.selectedOptionValue}'`
 : "" }}
 
 {{ DateSelect.selectedOptionValues.filter(d => d.includes('-')).length > 0 ?
-	`AND m.time_period IN (${ DateSelect.selectedOptionValues.filter(d => d.includes('-')).map(d => `'${d}'`).join(",")})`
+    `AND m.time_period IN (${ DateSelect.selectedOptionValues.filter(d => d.includes('-')).map(d => `'${d}'`).join(",")})`
 : "" }}
 
 {{ UtilityTypeSelect.selectedOptionValue ?

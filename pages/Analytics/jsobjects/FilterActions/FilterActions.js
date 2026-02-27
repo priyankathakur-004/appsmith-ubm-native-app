@@ -37,24 +37,6 @@ export default {
         await fetch_demand_loadfactor.run();
     },
 
-    printView() {
-        window.print();
-    },
-
-    async saveView() {
-        const state = {
-            dates: DateSelect.selectedOptionValues,
-            utilityType: UtilityTypeSelect.selectedOptionValue,
-            billType: BillTypeSelect.selectedOptionValue,
-            locationAttr: LocationAttrSelect.selectedOptionValue,
-            attrChoice: AttrChoiceSelect.selectedOptionValue,
-            location: LocationSelect.selectedOptionValue,
-            view: appsmith.store.activeView || 'Charges'
-        };
-        storeValue('savedAnalyticsView', JSON.stringify(state));
-        showAlert('View saved successfully', 'success');
-    },
-
     async loadSavedView() {
         const saved = appsmith.store.savedAnalyticsView;
         if (saved) {
