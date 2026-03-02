@@ -1,0 +1,50 @@
+{
+  "animateLoading": true,
+  "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+  "bottomRow": 4,
+  "boxShadow": "none",
+  "dynamicBindingPathList": [],
+  "dynamicTriggerPathList": [],
+  "iconAlign": "left",
+  "iconName": "menu",
+  "isLoading": false,
+  "isVisible": true,
+  "key": "swjsxcrnun",
+  "leftColumn": 59,
+  "menuColor": "#ffffff",
+  "menuItems": {
+    "menuItembz6ldwa0c7": {
+      "id": "menuItembz6ldwa0c7",
+      "index": 0,
+      "isDisabled": false,
+      "isVisible": true,
+      "label": "Export ",
+      "widgetId": "by839taw50"
+    },
+    "menuItemx06nx2k67f": {
+      "id": "menuItemx06nx2k67f",
+      "index": 1,
+      "isDisabled": false,
+      "isVisible": true,
+      "label": "Show as a Table",
+      "widgetId": "gr1l75skil"
+    }
+  },
+  "menuItemsSource": "STATIC",
+  "menuVariant": "TERTIARY",
+  "mobileBottomRow": 8,
+  "mobileLeftColumn": 60,
+  "mobileRightColumn": 64,
+  "mobileTopRow": 4,
+  "parentColumnSpace": 15,
+  "parentId": "hfal41s8xi",
+  "parentRowSpace": 10,
+  "placement": "CENTER",
+  "renderMode": "CANVAS",
+  "rightColumn": 64,
+  "topRow": 1,
+  "type": "MENU_BUTTON_WIDGET",
+  "version": 1,
+  "widgetId": "yyjcnh4188",
+  "widgetName": "ECLeftMenu"
+}

@@ -1,10 +1,10 @@
 {
   "animateLoading": true,
   "backgroundColor": "{{appsmith.theme.colors.primaryColor}}",
-  "borderColor": "#e2e8f0",
+  "borderColor": "{{appsmith.theme.colors.primaryColor}}",
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
   "borderWidth": "1",
-  "bottomRow": 129,
+  "bottomRow": 69,
   "boxShadow": "{{appsmith.theme.boxShadow.appBoxShadow}}",
   "children": [
     {
@@ -44,6 +44,9 @@
     },
     {
       "key": "backgroundColor"
+    },
+    {
+      "key": "borderColor"
     }
   ],
   "dynamicTriggerPathList": [],

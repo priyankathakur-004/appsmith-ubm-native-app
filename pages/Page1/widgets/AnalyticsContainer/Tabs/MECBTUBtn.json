@@ -1,0 +1,51 @@
+{
+  "animateLoading": true,
+  "borderRadius": "20px",
+  "bottomRow": 15,
+  "boxShadow": "none",
+  "buttonColor": "{{(appsmith.store.mecUOM || 'BTU') === 'BTU' ? '#2563eb' : '#ffffff'}}",
+  "buttonVariant": "{{(appsmith.store.mecUOM || 'BTU') === 'BTU' ? 'PRIMARY' : 'SECONDARY'}}",
+  "disabledWhenInvalid": false,
+  "dynamicBindingPathList": [
+    {
+      "key": "buttonVariant"
+    },
+    {
+      "key": "buttonColor"
+    },
+    {
+      "key": "textColor"
+    }
+  ],
+  "dynamicTriggerPathList": [
+    {
+      "key": "onClick"
+    }
+  ],
+  "isDefaultClickDisabled": true,
+  "isDisabled": false,
+  "isLoading": false,
+  "isVisible": true,
+  "key": "tkwfknwea3",
+  "leftColumn": 51,
+  "minWidth": 80,
+  "mobileBottomRow": 17,
+  "mobileLeftColumn": 51,
+  "mobileRightColumn": 55,
+  "mobileTopRow": 11,
+  "onClick": "{{storeValue('mecUOM', 'BTU')}}",
+  "parentColumnSpace": 15,
+  "parentId": "h6mfpfrl95",
+  "parentRowSpace": 10,
+  "placement": "CENTER",
+  "renderMode": "CANVAS",
+  "responsiveBehavior": "hug",
+  "rightColumn": 55,
+  "text": "BTU",
+  "textColor": "{{(appsmith.store.mecUOM || 'BTU') === 'BTU' ? '#ffffff' : '#2563eb'}}",
+  "topRow": 11,
+  "type": "BUTTON_WIDGET",
+  "version": 1,
+  "widgetId": "qgr499bnup",
+  "widgetName": "MECBTUBtn"
+}

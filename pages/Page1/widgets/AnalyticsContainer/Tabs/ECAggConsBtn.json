@@ -1,0 +1,51 @@
+{
+  "animateLoading": true,
+  "borderRadius": "20px",
+  "bottomRow": 10,
+  "boxShadow": "none",
+  "buttonColor": "{{(appsmith.store.ecActiveView || 'AggregatedConsumption') === 'AggregatedConsumption' ? '#2563eb' : '#ffffff'}}",
+  "buttonVariant": "{{(appsmith.store.ecActiveView || 'AggregatedConsumption') === 'AggregatedConsumption' ? 'PRIMARY' : 'SECONDARY'}}",
+  "disabledWhenInvalid": false,
+  "dynamicBindingPathList": [
+    {
+      "key": "buttonVariant"
+    },
+    {
+      "key": "buttonColor"
+    },
+    {
+      "key": "textColor"
+    }
+  ],
+  "dynamicTriggerPathList": [
+    {
+      "key": "onClick"
+    }
+  ],
+  "isDefaultClickDisabled": true,
+  "isDisabled": false,
+  "isLoading": false,
+  "isVisible": true,
+  "key": "r0hdyns16s",
+  "leftColumn": 13,
+  "minWidth": 80,
+  "mobileBottomRow": 12,
+  "mobileLeftColumn": 13,
+  "mobileRightColumn": 22,
+  "mobileTopRow": 6,
+  "onClick": "{{storeValue('ecActiveView', 'AggregatedConsumption')}}",
+  "parentColumnSpace": 15,
+  "parentId": "4o4ot7h6ip",
+  "parentRowSpace": 10,
+  "placement": "CENTER",
+  "renderMode": "CANVAS",
+  "responsiveBehavior": "hug",
+  "rightColumn": 22,
+  "text": "Aggregated Consumption",
+  "textColor": "{{(appsmith.store.ecActiveView || 'AggregatedConsumption') === 'AggregatedConsumption' ? '#ffffff' : '#2563eb'}}",
+  "topRow": 6,
+  "type": "BUTTON_WIDGET",
+  "version": 1,
+  "widgetId": "nud8mdviau",
+  "widgetName": "ECAggConsBtn"
+}

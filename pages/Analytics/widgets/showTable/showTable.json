@@ -2,14 +2,14 @@
   "animateLoading": true,
   "backgroundColor": "{{appsmith.theme.colors.primaryColor}}",
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 831,
+  "bottomRow": 791,
   "boxShadow": "none",
   "canEscapeKeyClose": true,
   "canOutsideClickClose": true,
   "children": [
     {
       "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-      "bottomRow": 830,
+      "bottomRow": 790,
       "boxShadow": "{{appsmith.theme.boxShadow.appBoxShadow}}",
       "canExtend": true,
       "detachFromLayout": true,
@@ -67,13 +67,14 @@
       "key": "onClose"
     }
   ],
-  "height": 830,
+  "height": 790,
   "isCanvas": true,
   "isLoading": false,
   "key": "plveskyfor",
   "leftColumn": 0,
   "maxDynamicHeight": 9000,
   "minDynamicHeight": 24,
+  "minHeight": 790,
   "mobileBottomRow": 25,
   "mobileLeftColumn": 0,
   "mobileRightColumn": 12,

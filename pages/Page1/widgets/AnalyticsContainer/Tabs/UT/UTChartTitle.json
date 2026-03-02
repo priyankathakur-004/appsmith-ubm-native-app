@@ -1,0 +1,40 @@
+{
+  "animateLoading": true,
+  "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+  "bottomRow": 4,
+  "boxShadow": "none",
+  "dynamicBindingPathList": [
+    {
+      "key": "fontFamily"
+    },
+    {
+      "key": "text"
+    }
+  ],
+  "dynamicTriggerPathList": [],
+  "fontFamily": "{{appsmith.theme.fontFamily.appFont}}",
+  "fontSize": "1rem",
+  "fontStyle": "BOLD",
+  "isLoading": false,
+  "isVisible": true,
+  "key": "9gbu91a63v",
+  "leftColumn": 15,
+  "mobileBottomRow": 8,
+  "mobileLeftColumn": 15,
+  "mobileRightColumn": 50,
+  "mobileTopRow": 1,
+  "parentColumnSpace": 15,
+  "parentId": "rd8m8b3fsx",
+  "parentRowSpace": 10,
+  "renderMode": "CANVAS",
+  "rightColumn": 50,
+  "shouldTruncate": false,
+  "text": "{{UtilityTreeHelper.getChartTitle()}}",
+  "textAlign": "CENTER",
+  "textColor": "#e2e8f0",
+  "topRow": 1,
+  "type": "TEXT_WIDGET",
+  "version": 1,
+  "widgetId": "merbgr077q",
+  "widgetName": "UTChartTitle"
+}

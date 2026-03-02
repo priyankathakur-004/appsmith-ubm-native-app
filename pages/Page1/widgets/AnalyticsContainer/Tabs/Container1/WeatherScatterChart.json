@@ -1,0 +1,40 @@
+{
+  "animateLoading": true,
+  "backgroundColor": "#1e293b",
+  "borderColor": "#334155",
+  "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+  "bottomRow": 117,
+  "boxShadow": "none",
+  "chartType": "CUSTOM_ECHART",
+  "customEChartConfig": "{{WeatherHelper.getScatterConfig()}}",
+  "dynamicBindingPathList": [
+    {
+      "key": "customEChartConfig"
+    },
+    {
+      "key": "borderRadius"
+    }
+  ],
+  "dynamicPropertyPathList": [],
+  "dynamicTriggerPathList": [],
+  "isLoading": false,
+  "isVisible": true,
+  "key": "cht_scatter",
+  "leftColumn": 0,
+  "mobileBottomRow": 120,
+  "mobileLeftColumn": 23,
+  "mobileRightColumn": 64,
+  "mobileTopRow": 57,
+  "originalBottomRow": 186,
+  "originalTopRow": 111,
+  "parentColumnSpace": 15,
+  "parentId": "fthummttrl",
+  "parentRowSpace": 10,
+  "renderMode": "CANVAS",
+  "rightColumn": 64,
+  "topRow": 57,
+  "type": "CHART_WIDGET",
+  "version": 1,
+  "widgetId": "1rfzvvpo39",
+  "widgetName": "WeatherScatterChart"
+}

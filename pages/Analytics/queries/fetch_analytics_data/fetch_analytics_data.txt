@@ -17,7 +17,7 @@ SELECT
     END AS consumption,
     m.total_consumption_uom,
     m.total_charges,
-        m.total_cdd,
+    m.total_cdd,
     m.total_hdd,
     m.total_dd
 

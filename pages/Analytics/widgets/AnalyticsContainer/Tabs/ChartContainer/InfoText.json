@@ -28,7 +28,7 @@
   "parentRowSpace": 10,
   "renderMode": "CANVAS",
   "rightColumn": 48,
-  "text": "{{LocationHelper.getInfoText()}}",
+  "text": "{{RankLocationHelper.getInfoText()}}",
   "textAlign": "LEFT",
   "textColor": "#ac6c2f",
   "topRow": 1,

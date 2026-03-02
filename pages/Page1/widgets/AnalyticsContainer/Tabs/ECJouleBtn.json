@@ -1,0 +1,51 @@
+{
+  "animateLoading": true,
+  "borderRadius": "20px",
+  "bottomRow": 10,
+  "boxShadow": "none",
+  "buttonColor": "{{(appsmith.store.ecUOM || 'BTU') === 'Joule' ? '#1e293b' : '#ffffff'}}",
+  "buttonVariant": "{{(appsmith.store.ecUOM || 'BTU') === 'Joule' ? 'PRIMARY' : 'SECONDARY'}}",
+  "disabledWhenInvalid": false,
+  "dynamicBindingPathList": [
+    {
+      "key": "buttonVariant"
+    },
+    {
+      "key": "buttonColor"
+    },
+    {
+      "key": "textColor"
+    }
+  ],
+  "dynamicTriggerPathList": [
+    {
+      "key": "onClick"
+    }
+  ],
+  "isDefaultClickDisabled": true,
+  "isDisabled": false,
+  "isLoading": false,
+  "isVisible": true,
+  "key": "6ucbhfhqs7",
+  "leftColumn": 60,
+  "minWidth": 80,
+  "mobileBottomRow": 12,
+  "mobileLeftColumn": 60,
+  "mobileRightColumn": 64,
+  "mobileTopRow": 6,
+  "onClick": "{{storeValue('ecUOM', 'Joule')}}",
+  "parentColumnSpace": 15,
+  "parentId": "4o4ot7h6ip",
+  "parentRowSpace": 10,
+  "placement": "CENTER",
+  "renderMode": "CANVAS",
+  "responsiveBehavior": "hug",
+  "rightColumn": 64,
+  "text": "Joule",
+  "textColor": "{{(appsmith.store.ecUOM || 'BTU') === 'Joule' ? '#ffffff' : '#1e293b'}}",
+  "topRow": 6,
+  "type": "BUTTON_WIDGET",
+  "version": 1,
+  "widgetId": "rc2c4xqpm4",
+  "widgetName": "ECJouleBtn"
+}

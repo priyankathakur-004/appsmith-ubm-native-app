@@ -3,7 +3,7 @@ export default {
 				let data = [];
 
 				if (Tabs.selectedTab === 'Rank of Locations')
-						data = LocationHelper.getTableData();
+						data = RankLocationHelper.getTableData();
 
 				if (Tabs.selectedTab === 'Weather Sensitivity') {
 						if (appsmith.store.chartName === 'Time Series')
@@ -46,6 +46,18 @@ export default {
 
 		clear() {
 			removeValue('chartName');
+			removeValue('viewType');
+			removeValue('selectedSite');
+			removeValue('selectedLocation');
+			removeValue('dateRange');
+			removeValue('filters');
+			removeValue('analyticsData');
+			removeValue('demandData');
+			removeValue('ecActiveView');
+			removeValue('ecUOM');
+			removeValue('mecActiveView');
+			removeValue('mecChartType');
+			removeValue('mecUOM');
 		},
 	
 		setDefaults() {

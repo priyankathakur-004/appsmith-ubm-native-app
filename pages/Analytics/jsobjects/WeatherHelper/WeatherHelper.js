@@ -89,7 +89,7 @@ export default {
 
         return {
 
-            backgroundColor: "#111827",
+            backgroundColor: "#1E293B",
 
             tooltip: {
                 trigger: "axis"
@@ -282,7 +282,7 @@ export default {
 
         return {
 
-            backgroundColor: "#111827",
+            backgroundColor: "#1E293B",
 
             tooltip: {
                 trigger: "axis"
@@ -385,7 +385,7 @@ export default {
 
         return {
 
-            backgroundColor: "#111827",
+            backgroundColor: "#1E293B",
 
             tooltip: {
                 trigger: 'item'
