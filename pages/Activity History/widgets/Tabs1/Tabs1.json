@@ -5,7 +5,7 @@
   "borderColor": "#E0DEDE",
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
   "borderWidth": 1,
-  "bottomRow": 124,
+  "bottomRow": 125,
   "boxShadow": "{{appsmith.theme.boxShadow.appBoxShadow}}",
   "children": [
     {
@@ -56,7 +56,7 @@
     },
     {
       "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-      "bottomRow": 1010,
+      "bottomRow": 1020,
       "boxShadow": "{{appsmith.theme.boxShadow.appBoxShadow}}",
       "canExtend": true,
       "detachFromLayout": true,
@@ -99,6 +99,51 @@
       "version": 1,
       "widgetId": "d6i2ipzjek",
       "widgetName": "Canvas2"
+    },
+    {
+      "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+      "bottomRow": 1020,
+      "boxShadow": "{{appsmith.theme.boxShadow.appBoxShadow}}",
+      "canExtend": false,
+      "containerStyle": "none",
+      "detachFromLayout": true,
+      "dynamicBindingPathList": [
+        {
+          "key": "borderRadius"
+        },
+        {
+          "key": "boxShadow"
+        }
+      ],
+      "dynamicHeight": "AUTO_HEIGHT",
+      "dynamicTriggerPathList": [],
+      "flexLayers": [],
+      "isLoading": false,
+      "isVisible": true,
+      "key": "y0ylkc5w1p",
+      "leftColumn": 0,
+      "maxDynamicHeight": 9000,
+      "minDynamicHeight": 4,
+      "minHeight": 2230,
+      "minWidth": 450,
+      "mobileBottomRow": 2231,
+      "mobileLeftColumn": 0,
+      "mobileRightColumn": 1073,
+      "mobileTopRow": 1,
+      "needsErrorInfo": false,
+      "parentColumnSpace": 1,
+      "parentId": "yyhof7a6gd",
+      "parentRowSpace": 1,
+      "renderMode": "CANVAS",
+      "responsiveBehavior": "fill",
+      "rightColumn": 1073,
+      "tabId": "tab6ko9wp7dw8",
+      "tabName": "Operators",
+      "topRow": 1,
+      "type": "CANVAS_WIDGET",
+      "version": 1,
+      "widgetId": "cwasdxqcco",
+      "widgetName": "Canvas3"
     }
   ],
   "defaultTab": "User Activity Summary",
@@ -133,15 +178,15 @@
   "mobileRightColumn": 7,
   "mobileTopRow": 24,
   "needsErrorInfo": false,
-  "onTabSelected": "{{getActivityHistory.run();\ngetUserActivitySummary.run()}}",
-  "originalBottomRow": 124,
+  "onTabSelected": "{{getUserActivitySummary.run();}}",
+  "originalBottomRow": 125,
   "originalTopRow": 19,
   "parentColumnSpace": 16.765625,
   "parentId": "0",
   "parentRowSpace": 10,
   "renderMode": "CANVAS",
   "responsiveBehavior": "fill",
-  "rightColumn": 64,
+  "rightColumn": 62,
   "shouldScrollContents": true,
   "shouldShowTabs": true,
   "tabsObj": {
@@ -162,6 +207,13 @@
       "label": "User Activity Summary",
       "positioning": "vertical",
       "widgetId": "d6i2ipzjek"
+    },
+    "tab6ko9wp7dw8": {
+      "id": "tab6ko9wp7dw8",
+      "index": 2,
+      "isVisible": true,
+      "label": "Operators",
+      "widgetId": "cwasdxqcco"
     }
   },
   "topRow": 19,

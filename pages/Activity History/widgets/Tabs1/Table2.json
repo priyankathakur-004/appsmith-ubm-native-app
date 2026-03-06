@@ -1,11 +1,10 @@
 {
   "accentColor": "{{appsmith.theme.colors.primaryColor}}",
-  "allowAddNewRow": false,
   "animateLoading": true,
   "borderColor": "#E0DEDE",
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
   "borderWidth": "1",
-  "bottomRow": 217,
+  "bottomRow": 100,
   "boxShadow": "{{appsmith.theme.boxShadow.appBoxShadow}}",
   "cachedTableData": {},
   "canFreezeColumn": true,
@@ -41,11 +40,8 @@
     "Customer",
     "Activity_Text"
   ],
-  "columnUpdatedAt": 1766483815833,
-  "columnWidthMap": {
-    "activity_text": 212,
-    "batch_ids": 220
-  },
+  "columnUpdatedAt": 1772703159661,
+  "columnWidthMap": {},
   "customIsLoading": false,
   "customIsLoadingValue": "",
   "defaultPageSize": 0,
@@ -68,9 +64,6 @@
       "key": "tableData"
     },
     {
-      "key": "totalRecordsCount"
-    },
-    {
       "key": "primaryColumns.Created_At.computedValue"
     },
     {
@@ -90,6 +83,9 @@
     },
     {
       "key": "primaryColumns.Activity_Text.computedValue"
+    },
+    {
+      "key": "totalRecordsCount"
     }
   ],
   "dynamicPropertyPathList": [
@@ -102,11 +98,10 @@
       "key": "onPageChange"
     }
   ],
-  "enableClientSideSearch": false,
+  "enableClientSideSearch": true,
   "endOfData": false,
   "flexVerticalAlignment": "start",
   "horizontalAlignment": "LEFT",
-  "infiniteScrollEnabled": false,
   "inlineEditingSaveOption": "ROW_LEVEL",
   "isLoading": false,
   "isSortable": true,
@@ -114,21 +109,19 @@
   "isVisibleDownload": true,
   "isVisibleFilters": false,
   "isVisiblePagination": true,
-  "isVisibleSearch": false,
-  "key": "voeqjtxsdg",
+  "isVisibleSearch": true,
+  "key": "q88u9hx3js",
   "label": "Data",
   "leftColumn": 0,
   "minWidth": 450,
-  "mobileBottomRow": 35,
-  "mobileLeftColumn": 1,
-  "mobileRightColumn": 35,
-  "mobileTopRow": 7,
+  "mobileBottomRow": 31,
+  "mobileLeftColumn": 0,
+  "mobileRightColumn": 19,
+  "mobileTopRow": 3,
   "needsErrorInfo": false,
-  "onPageChange": "{{getActivityHistory.run();}}",
-  "originalBottomRow": 233,
-  "originalTopRow": 25,
-  "parentColumnSpace": 20.03125,
-  "parentId": "yey162enke",
+  "onPageChange": "{{getOperatorHistoryCount.run()}}",
+  "parentColumnSpace": 19.09375,
+  "parentId": "cwasdxqcco",
   "parentRowSpace": 10,
   "primaryColumns": {
     "Activity_Text": {
@@ -137,7 +130,7 @@
       "allowSameOptionsInNewRow": true,
       "cellBackground": "",
       "columnType": "text",
-      "computedValue": "{{(() => { const tableData = Table1.processedTableData || []; return tableData.length > 0 ? tableData.map((currentRow, currentIndex) => (currentRow[\"Activity Text\"])) : Activity Text })()}}",
+      "computedValue": "{{(() => { const tableData = Table2.processedTableData || []; return tableData.length > 0 ? tableData.map((currentRow, currentIndex) => (currentRow[\"Activity Text\"])) : Activity Text })()}}",
       "currencyCode": "USD",
       "decimals": 0,
       "enableFilter": true,
@@ -171,7 +164,7 @@
       "allowSameOptionsInNewRow": true,
       "cellBackground": "",
       "columnType": "text",
-      "computedValue": "{{(() => { const tableData = Table1.processedTableData || []; return tableData.length > 0 ? tableData.map((currentRow, currentIndex) => (currentRow[\"Batch IDs\"])) : Batch IDs })()}}",
+      "computedValue": "{{(() => { const tableData = Table2.processedTableData || []; return tableData.length > 0 ? tableData.map((currentRow, currentIndex) => (currentRow[\"Batch IDs\"])) : Batch IDs })()}}",
       "currencyCode": "USD",
       "decimals": 0,
       "enableFilter": true,
@@ -205,7 +198,7 @@
       "allowSameOptionsInNewRow": true,
       "cellBackground": "",
       "columnType": "number",
-      "computedValue": "{{(() => { const tableData = Table1.processedTableData || []; return tableData.length > 0 ? tableData.map((currentRow, currentIndex) => (currentRow[\"Bill ID\"])) : Bill ID })()}}",
+      "computedValue": "{{(() => { const tableData = Table2.processedTableData || []; return tableData.length > 0 ? tableData.map((currentRow, currentIndex) => (currentRow[\"Bill ID\"])) : Bill ID })()}}",
       "currencyCode": "USD",
       "decimals": 0,
       "enableFilter": true,
@@ -239,7 +232,7 @@
       "allowSameOptionsInNewRow": true,
       "cellBackground": "",
       "columnType": "date",
-      "computedValue": "{{(() => { const tableData = Table1.processedTableData || []; return tableData.length > 0 ? tableData.map((currentRow, currentIndex) => (currentRow[\"Created At\"])) : Created At })()}}",
+      "computedValue": "{{(() => { const tableData = Table2.processedTableData || []; return tableData.length > 0 ? tableData.map((currentRow, currentIndex) => (currentRow[\"Created At\"])) : Created At })()}}",
       "currencyCode": "USD",
       "decimals": 0,
       "enableFilter": true,
@@ -273,7 +266,7 @@
       "allowSameOptionsInNewRow": true,
       "cellBackground": "",
       "columnType": "text",
-      "computedValue": "{{(() => { const tableData = Table1.processedTableData || []; return tableData.length > 0 ? tableData.map((currentRow, currentIndex) => (currentRow[\"Customer\"])) : Customer })()}}",
+      "computedValue": "{{(() => { const tableData = Table2.processedTableData || []; return tableData.length > 0 ? tableData.map((currentRow, currentIndex) => (currentRow[\"Customer\"])) : Customer })()}}",
       "currencyCode": "USD",
       "decimals": 0,
       "enableFilter": true,
@@ -307,7 +300,7 @@
       "allowSameOptionsInNewRow": true,
       "cellBackground": "",
       "columnType": "text",
-      "computedValue": "{{(() => { const tableData = Table1.processedTableData || []; return tableData.length > 0 ? tableData.map((currentRow, currentIndex) => (currentRow[\"User Email\"])) : User Email })()}}",
+      "computedValue": "{{(() => { const tableData = Table2.processedTableData || []; return tableData.length > 0 ? tableData.map((currentRow, currentIndex) => (currentRow[\"User Email\"])) : User Email })()}}",
       "currencyCode": "USD",
       "decimals": 0,
       "enableFilter": true,
@@ -341,7 +334,7 @@
       "allowSameOptionsInNewRow": true,
       "cellBackground": "",
       "columnType": "text",
-      "computedValue": "{{(() => { const tableData = Table1.processedTableData || []; return tableData.length > 0 ? tableData.map((currentRow, currentIndex) => (currentRow[\"User Name\"])) : User Name })()}}",
+      "computedValue": "{{(() => { const tableData = Table2.processedTableData || []; return tableData.length > 0 ? tableData.map((currentRow, currentIndex) => (currentRow[\"User Name\"])) : User Name })()}}",
       "currencyCode": "USD",
       "decimals": 0,
       "enableFilter": true,
@@ -372,16 +365,16 @@
   },
   "renderMode": "CANVAS",
   "responsiveBehavior": "fill",
-  "rightColumn": 63,
+  "rightColumn": 64,
   "searchKey": "",
   "serverSidePaginationEnabled": true,
-  "tableData": "{{ \ngetActivityHistory.data.length ? getActivityHistory.data : [{ message: \"No data available.\" }] \n}}",
+  "tableData": "{{ \ngetOperatorActivityHistory.data.length ? getOperatorActivityHistory.data : [{ message: \"No data available.\" }] \n}}",
   "textSize": "0.875rem",
-  "topRow": 7,
-  "totalRecordsCount": "{{getActivityHistoryCount.data[0].total_count }}",
+  "topRow": 11,
+  "totalRecordsCount": "{{getOperatorHistoryCount.data[0].total_count }}",
   "type": "TABLE_WIDGET_V2",
   "version": 2,
   "verticalAlignment": "CENTER",
-  "widgetId": "mlsa86ok6d",
-  "widgetName": "Table1"
+  "widgetId": "0zec715cpc",
+  "widgetName": "Table2"
 }
