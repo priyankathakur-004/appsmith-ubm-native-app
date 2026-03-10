@@ -12,15 +12,17 @@ LEFT JOIN bill_management_v2.users u
     ON u.id = ah.user_id
 WHERE
     1=1
-    {{ users.selectedOptionValues && users.selectedOptionValues.length 
-        ? `AND u.id IN (${users.selectedOptionValues.map(v => `'${v}'`).join(',')})`
-        : ""
-    }}
-    {{ dateFrom.selectedDate && dateTo.selectedDate ? 
-        `AND ah.created_at >= '${moment(dateFrom.selectedDate).startOf('day').format('YYYY-MM-DD HH:mm:ss')}'
-         AND ah.created_at <= '${moment(dateTo.selectedDate).endOf('day').format('YYYY-MM-DD HH:mm:ss')}'`
-        : ""
-    }}
+    AND u.email IN (
+			'juana.mejia+admin@constellation.com',
+			'jaclyn.hayes+admin@constellation.com',
+			'rmoss+admin@pear.ai',
+			'meghan+admin@pear.ai',
+			'elizabeth.say+admin@constellation.com',
+			'karen+admin@pear.ai',
+			'agha.bilal+admin@constellation.com',
+			'daniel.torres+admin@constellation.com',
+			'mary.foster+admin@constellation.com'
+		)
 GROUP BY
     u.id,
     u.email,

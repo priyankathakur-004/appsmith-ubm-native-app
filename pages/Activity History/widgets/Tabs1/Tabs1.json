@@ -5,7 +5,7 @@
   "borderColor": "#E0DEDE",
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
   "borderWidth": 1,
-  "bottomRow": 125,
+  "bottomRow": 123,
   "boxShadow": "{{appsmith.theme.boxShadow.appBoxShadow}}",
   "children": [
     {
@@ -56,7 +56,7 @@
     },
     {
       "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-      "bottomRow": 1020,
+      "bottomRow": 1000,
       "boxShadow": "{{appsmith.theme.boxShadow.appBoxShadow}}",
       "canExtend": true,
       "detachFromLayout": true,
@@ -102,7 +102,7 @@
     },
     {
       "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-      "bottomRow": 1020,
+      "bottomRow": 1000,
       "boxShadow": "{{appsmith.theme.boxShadow.appBoxShadow}}",
       "canExtend": false,
       "containerStyle": "none",
@@ -144,6 +144,51 @@
       "version": 1,
       "widgetId": "cwasdxqcco",
       "widgetName": "Canvas3"
+    },
+    {
+      "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
+      "bottomRow": 1000,
+      "boxShadow": "{{appsmith.theme.boxShadow.appBoxShadow}}",
+      "canExtend": false,
+      "containerStyle": "none",
+      "detachFromLayout": true,
+      "dynamicBindingPathList": [
+        {
+          "key": "borderRadius"
+        },
+        {
+          "key": "boxShadow"
+        }
+      ],
+      "dynamicHeight": "AUTO_HEIGHT",
+      "dynamicTriggerPathList": [],
+      "flexLayers": [],
+      "isLoading": false,
+      "isVisible": true,
+      "key": "iis2kkk37r",
+      "leftColumn": 0,
+      "maxDynamicHeight": 9000,
+      "minDynamicHeight": 4,
+      "minHeight": 1050,
+      "minWidth": 450,
+      "mobileBottomRow": 1051,
+      "mobileLeftColumn": 0,
+      "mobileRightColumn": 1039.46875,
+      "mobileTopRow": 1,
+      "needsErrorInfo": false,
+      "parentColumnSpace": 1,
+      "parentId": "yyhof7a6gd",
+      "parentRowSpace": 1,
+      "renderMode": "CANVAS",
+      "responsiveBehavior": "fill",
+      "rightColumn": 1039.46875,
+      "tabId": "tabldijnuflmy",
+      "tabName": "Operators Summary",
+      "topRow": 1,
+      "type": "CANVAS_WIDGET",
+      "version": 1,
+      "widgetId": "eabps0hz2g",
+      "widgetName": "Canvas4"
     }
   ],
   "defaultTab": "User Activity Summary",
@@ -179,7 +224,7 @@
   "mobileTopRow": 24,
   "needsErrorInfo": false,
   "onTabSelected": "{{getUserActivitySummary.run();}}",
-  "originalBottomRow": 125,
+  "originalBottomRow": 128,
   "originalTopRow": 19,
   "parentColumnSpace": 16.765625,
   "parentId": "0",
@@ -214,6 +259,13 @@
       "isVisible": true,
       "label": "Operators",
       "widgetId": "cwasdxqcco"
+    },
+    "tabldijnuflmy": {
+      "id": "tabldijnuflmy",
+      "index": 3,
+      "isVisible": true,
+      "label": "Operators Summary",
+      "widgetId": "eabps0hz2g"
     }
   },
   "topRow": 19,
