@@ -4,6 +4,8 @@ SELECT
     m.utility_type,
     m.bill_type,
     m.location_id,
+		m.client_account as service_account,
+		m.meter_serial as meter,
     m.location_description,
         l.address,
         l.state,
@@ -35,8 +37,8 @@ WHERE 1=1
     `AND m.time_period IN (${ DateSelect.selectedOptionValues.filter(d => d.includes('-')).map(d => `'${d}'`).join(",")})`
 : "" }}
 
-{{ UtilityTypeSelect.selectedOptionValue ?
-`AND m.utility_type = '${UtilityTypeSelect.selectedOptionValue}'`
+{{ UtilityTypeSelect.selectedOptionValues.length
+? `AND m.utility_type IN ('${UtilityTypeSelect.selectedOptionValues.join("','")}')`
 : "" }}
 
 {{ BillTypeSelect.selectedOptionValue ?

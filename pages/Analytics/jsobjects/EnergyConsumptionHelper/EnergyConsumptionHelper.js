@@ -1,44 +1,24 @@
 export default {
 
-    getBTUConversionFactor(utilityType, uom) {
+/* ===============================
+   ACTIVE SETTINGS
+=============================== */
 
-        const map = {
-            ELECTRIC: 3412.14,
-            NATURALGAS: 102800,
-            OIL2: 138500,
-            STEAM: 1000,
-            WATER: 0,
-            SEWER: 0
-        };
+getActiveView(){
+    return appsmith.store.ecActiveView || "AggregatedConsumption";
+},
 
-        const base = map[utilityType] || 0;
-        const u = uom || appsmith.store.ecUOM || "BTU";
+getUOMLabel(){
 
-        if (u === "Wh") return base * 0.29307107;
-        if (u === "Joule") return base * 1055.06;
+    const u = appsmith.store.ecUOM || "BTU";
 
-        return base;
+    if(u==="Wh") return "Watt hour";
+    if(u==="Joule") return "Joule";
 
-    },
+    return "mmBTU";
+},
 
-    getUOMLabel() {
-
-        const u = appsmith.store.ecUOM || "BTU";
-
-        if (u === "Wh") return "Watt hour";
-        if (u === "Joule") return "Joule";
-
-        return "mmBTU";
-
-    },
-
-    getActiveView() {
-
-        return appsmith.store.ecActiveView || "AggregatedConsumption";
-
-    },
-	
-	 	getLeftChartTitle() {
+	getLeftChartTitle() {
         const view = this.getActiveView();
         const uom = this.getUOMLabel();
         const titles = {
@@ -59,375 +39,494 @@ export default {
         return titles[view] || titles['AggregatedConsumption'];
     },
 
-    getAggregatedData() {
+convertMMBTU(v){
 
-        const raw = fetch_analytics_data.data || [];
-        const uom = appsmith.store.ecUOM || "BTU";
+    const u = appsmith.store.ecUOM || "BTU";
 
-        const map = {};
+    if(u==="Wh") return v*293071;
+    if(u==="Joule") return v*1055060000;
 
-        raw.forEach(r => {
+    return v;
+},
 
-            const loc = r.location_description || "Unknown";
 
-            if (!map[loc])
-                map[loc] = {
-                    cons: 0,
-                    charges: 0,
-                    sqft: Number(r.square_feet) || 0
-                };
 
-            const f = this.getBTUConversionFactor(r.utility_type, uom);
+/* ===============================
+   UNIT CONVERSION (MASTER LOGIC)
+=============================== */
 
-            map[loc].cons += ((Number(r.consumption) || 0) * f) / 1000000;
-            map[loc].charges += Number(r.total_charges) || 0;
+getMMBTU(r){
 
-        });
+    let factor=0;
 
-        return map;
+    const unit=(r.total_consumption_uom||"").toUpperCase();
 
-    },
+    if(unit==="KWH") factor=3412.14;
+    else if(unit==="THERM") factor=100000;
+    else if(unit==="CCF") factor=102800;
+    else if(unit==="GAL") factor=138500;
 
-    getLocationChartConfig() {
+    return ((Number(r.consumption)||0)*factor)/1000000;
 
-        const view = this.getActiveView();
-        const data = this.getAggregatedData();
-        const uom = this.getUOMLabel();
+},
 
-        const rows = Object.entries(data).map(([n, d]) => {
 
-            let v = d.cons;
 
-            if (view === "AggregatedUnitCost") v = d.charges;
-            if (view === "EnergyUseIntensity") v = d.sqft > 0 ? d.cons / d.sqft : 0;
+/* ===============================
+   AGGREGATED DATA
+=============================== */
 
-            return {
-                name: n,
-                value: Number(v.toFixed(2))
+getLocationAggregatedData(){
+
+    const raw=fetch_analytics_data.data||[];
+    const map={};
+
+    raw.forEach(r=>{
+
+        const loc=r.location_description||"Unknown";
+
+        if(!map[loc]){
+
+            map[loc]={
+
+                cons:0,
+                charges:0,
+                sqft:Number(r.square_feet)||0
+
             };
+        }
 
-        }).sort((a, b) => b.value - a.value);
+        const mmBTU=this.getMMBTU(r);
 
+        map[loc].cons+=mmBTU;
+        map[loc].charges+=Number(r.total_charges)||0;
 
-        let xlabel = "Equivalent Energy (" + uom + ")";
+    });
 
-        if (view === "AggregatedUnitCost")
-            xlabel = "Total Charges ($)";
-
-        if (view === "EnergyUseIntensity")
-            xlabel = "EUI (" + uom + "/sqft)";
-
-
-        return {
-
-            backgroundColor: "#1E293B",
-
-            tooltip: {
-                trigger: "axis",
-                axisPointer: {
-                    type: "shadow"
-                },
-                backgroundColor: "#0F172A",
-                textStyle: {
-                    color: "#E2E8F0"
-                }
-            },
-
-            grid: {
-                left: "15%",
-                right:  "10%",
-                top:  "5%",
-                bottom: "10%"
-            },
-
-            xAxis: {
-                type: "value",
-                name: xlabel,
-                nameLocation: "middle",
-                nameGap: 40,
-
-                nameTextStyle: {
-                    color: "#CBD5F5"
-                },
-
-                axisLabel: {
-                    color: "#CBD5E1",
-                    formatter: v => v >= 1000000 ? (v / 1000000).toFixed(1) + "M" : v >= 1000 ? (v / 1000).toFixed(0) + "K" : v
-                },
-
-                axisLine: {
-                    lineStyle: {
-                        color: "#475569"
-                    }
-                },
-
-                splitLine: {
-                    lineStyle: {
-                        color: "#334155"
-                    }
-                }
-            },
-
-            yAxis: {
-                type: "category",
-                inverse: true,
-                data: rows.map(r => r.name),
-
-                axisLabel: {
-                    color: "#E2E8F0",
-                    width: 110,
-                    overflow: "truncate"
-                },
-
-                axisLine: {
-                    show: false
-                },
-                axisTick: {
-                    show: false
-                }
-            },
-
-            series: [{
-                type: "bar",
-                barWidth: 18,
-
-                itemStyle: {
-                    color: "#3B82F6",
-                    borderRadius: [0, 4, 4, 0]
-                },
-
-                data: rows.map(r => r.value)
-
-            }]
-
-        };
-
-    },
-
-    getMeterChartConfig() {
-
-        const raw = fetch_analytics_data.data || [];
-        const view = this.getActiveView();
-        const uom = this.getUOMLabel();
-        const u = appsmith.store.ecUOM || "BTU";
-
-        const map = {};
-
-        raw.forEach(r => {
-
-            const k = (r.location_description || "") + " " + (r.location_id || "");
-
-            if (!map[k])
-                map[k] = {
-                    cons: 0,
-                    charges: 0,
-                    sqft: Number(r.square_feet) || 0
-                };
-
-            const f = this.getBTUConversionFactor(r.utility_type, u);
-
-            map[k].cons += ((Number(r.consumption) || 0) * f) / 1000000;
-            map[k].charges += Number(r.total_charges) || 0;
-
-        });
+    return map;
+},
 
 
-        const rows = Object.entries(map).map(([n, d]) => {
 
-            let v = d.cons;
+getMeterAggregatedData(){
 
-            if (view === "AggregatedUnitCost") v = d.charges;
-            if (view === "EnergyUseIntensity") v = d.sqft > 0 ? d.cons / d.sqft : 0;
+    const raw=fetch_analytics_data.data||[];
+    const map={};
 
-            return {
-                name: n.length > 40 ? n.substring(0, 37) + "..." : n,
-                value: Number(v.toFixed(2))
+    raw.forEach(r=>{
+
+        const key=
+        (r.location_description||"Unknown")
+        +", "+
+        (r.service_account||"-")
+        +", "+
+        (r.meter||"-");
+
+
+        if(!map[key]){
+
+            map[key]={
+
+                cons:0,
+                charges:0,
+                sqft:Number(r.square_feet)||0
+
             };
+        }
 
-        }).sort((a, b) => b.value - a.value).slice(0, 8);
+        const mmBTU=this.getMMBTU(r);
+
+        map[key].cons+=mmBTU;
+        map[key].charges+=Number(r.total_charges)||0;
+
+    });
+
+    return map;
+},
 
 
-        let xlabel = "Equivalent Energy (" + uom + ")";
 
-        if (view === "AggregatedUnitCost")
-            xlabel = "Total Charges ($)";
+getUtilityAggregatedData(){
 
-        if (view === "EnergyUseIntensity")
-            xlabel = "EUI (" + uom + "/sqft)";
+    const raw=fetch_analytics_data.data||[];
+    const map={};
+
+    raw.forEach(r=>{
+
+        const t=r.utility_type||"Unknown";
+
+        if(!map[t]) map[t]=0;
+
+        map[t]+=this.getMMBTU(r);
+
+    });
+
+    return map;
+},
 
 
-        return {
 
-            backgroundColor: "#1E293B",
+/* ===============================
+   VALUE CALCULATION
+=============================== */
 
-            tooltip: {
-                trigger: "axis",
-                axisPointer: {
-                    type: "shadow"
-                },
-                backgroundColor: "#0F172A",
-                textStyle: {
-                    color: "#E2E8F0"
-                }
+getValue(d){
+
+    const view=this.getActiveView();
+
+    let v=d.cons;
+
+    if(view==="AggregatedUnitCost")
+        v=d.charges;
+
+    if(view==="EnergyUseIntensity")
+        v=d.sqft>0?d.cons/d.sqft:0;
+
+
+    if(view!=="AggregatedUnitCost")
+        v=this.convertMMBTU(v);
+
+
+    return Number(v.toFixed(2));
+},
+
+
+
+/* ===============================
+   LOCATION CHART
+=============================== */
+
+getLocationChartConfig(){
+
+    const data=this.getLocationAggregatedData();
+    const view=this.getActiveView();
+    const uom=this.getUOMLabel();
+
+
+    const rows=Object.entries(data)
+    .map(([n,d])=>({
+
+        name:n,
+        value:this.getValue(d)
+
+    }))
+    .sort((a,b)=>b.value-a.value);
+
+
+
+    let xlabel="Equivalent Energy ("+uom+")";
+
+    if(view==="AggregatedUnitCost")
+        xlabel="Total Charges ($)";
+
+    if(view==="EnergyUseIntensity")
+        xlabel="EUI ("+uom+"/sqft)";
+
+
+    return{
+
+        backgroundColor:"#1E293B",
+
+        grid:{
+            left:"15%",
+            right:"10%",
+            top:"5%",
+            bottom:"10%"
+        },
+
+
+        xAxis:{
+            type:"value",
+            name:xlabel,
+            nameLocation:"middle",
+            nameGap:40,
+
+            nameTextStyle:{color:"#CBD5E1"},
+
+            axisLabel:{color:"#CBD5E1"},
+
+            axisLine:{lineStyle:{color:"#475569"}},
+
+            splitLine:{lineStyle:{color:"#334155"}}
+
+        },
+
+
+        yAxis:{
+            type:"category",
+            inverse:true,
+            data:rows.map(r=>r.name),
+
+            axisLabel:{
+                color:"#E2E8F0",
+                width:120,
+                overflow:"truncate"
             },
 
-            grid: {
-                left: "25%",
-                right: "5%",
-                top: "5%",
-                bottom: "10%"
+            axisLine:{show:false},
+            axisTick:{show:false}
+
+        },
+
+
+        series:[{
+
+            type:"bar",
+            barWidth:18,
+
+            itemStyle:{
+                color:"#3B82F6",
+                borderRadius:[0,4,4,0]
             },
 
-            xAxis: {
-                type: "value",
-                name: xlabel,
-                nameLocation: "middle",
-                nameGap: 40,
+            data:rows.map(r=>r.value)
 
-                nameTextStyle: {
-                    color: "#CBD5F5"
-                },
+        }]
 
-                axisLabel: {
-                    color: "#CBD5E1",
-                    formatter: v => v >= 1000000 ? (v / 1000000).toFixed(1) + "M" : v >= 1000 ? (v / 1000).toFixed(0) + "K" : v
-                },
+    };
 
-                axisLine: {
-                    lineStyle: {
-                        color: "#475569"
-                    }
-                },
+},
 
-                splitLine: {
-                    lineStyle: {
-                        color: "#334155"
-                    }
-                }
+
+
+/* ===============================
+   METER CHART
+=============================== */
+
+getMeterChartConfig(){
+
+    const data=this.getMeterAggregatedData();
+    const view=this.getActiveView();
+    const uom=this.getUOMLabel();
+
+
+    const rows=Object.entries(data)
+    .map(([n,d])=>({
+
+        name:n.length>40?n.substring(0,37)+"...":n,
+        value:this.getValue(d)
+
+    }))
+    .sort((a,b)=>b.value-a.value)
+    .slice(0,8);
+
+
+
+    let xlabel="Equivalent Energy ("+uom+")";
+
+    if(view==="AggregatedUnitCost")
+        xlabel="Total Charges ($)";
+
+    if(view==="EnergyUseIntensity")
+        xlabel="EUI ("+uom+"/sqft)";
+
+
+
+    return{
+
+        backgroundColor:"#1E293B",
+
+        grid:{
+            left:"40%",
+            right:"5%",
+            top:"5%",
+            bottom:"10%"
+        },
+
+
+        xAxis:{
+            type:"value",
+            name:xlabel,
+            nameLocation:"middle",
+            nameGap:40,
+
+            nameTextStyle:{color:"#CBD5E1"},
+
+            axisLabel:{color:"#CBD5E1"},
+
+            axisLine:{lineStyle:{color:"#475569"}},
+
+            splitLine:{lineStyle:{color:"#334155"}}
+
+        },
+
+
+        yAxis:{
+            type:"category",
+            inverse:true,
+            data:rows.map(r=>r.name),
+
+            axisLabel:{
+                color:"#E2E8F0",
+                width:200,
+                overflow:"truncate"
             },
 
-            yAxis: {
-                type: "category",
-                inverse: true,
-                data: rows.map(r => r.name),
+            axisLine:{show:false},
+            axisTick:{show:false}
 
-                axisLabel: {
-                    color: "#E2E8F0",
-                    width: 190,
-                    overflow: "truncate"
-                },
+        },
 
-                axisLine: {
-                    show: false
-                },
-                axisTick: {
-                    show: false
-                }
+
+        series:[{
+
+            type:"bar",
+            barWidth:18,
+
+            itemStyle:{
+                color:"#3B82F6",
+                borderRadius:[0,4,4,0]
             },
 
-            series: [{
-                type: "bar",
-                barWidth: 18,
+            data:rows.map(r=>r.value)
 
-                itemStyle: {
-                    color: "#3B82F6",
-                    borderRadius: [0, 4, 4, 0]
-                },
+        }]
 
-                data: rows.map(r => r.value)
+    };
 
-            }]
-
-        };
-
-    },
-
-    getUtilityPieConfig() {
-
-        const raw = fetch_analytics_data.data || [];
-        const u = appsmith.store.ecUOM || "BTU";
-
-        const map = {};
-
-        raw.forEach(r => {
-
-            const t = r.utility_type || "Unknown";
-
-            if (!map[t]) map[t] = 0;
-
-            const f = this.getBTUConversionFactor(t, u);
-
-            map[t] += ((Number(r.consumption) || 0) * f) / 1000000;
-
-        });
+},
 
 
-        const rows = Object.entries(map).map(([n, v]) => ({
-            name: n,
-            value: Number(v.toFixed(2))
-        }));
+
+/* ===============================
+   PIE CHART
+=============================== */
+
+getUtilityPieConfig(){
+
+    const data=this.getUtilityAggregatedData();
 
 
-        const colors = {
-            NATURALGAS: "#22C55E",
-            ELECTRIC: "#3B82F6",
-            OIL2: "#065F46",
-            STEAM: "#F59E0B",
-            WATER: "#06B6D4"
-        };
+    const rows=Object.entries(data)
+    .map(([n,v])=>({
+
+        name:n,
+        value:Number(this.convertMMBTU(v).toFixed(2))
+
+    }));
 
 
-        return {
+    return{
 
-            backgroundColor: "#1E293B",
+        backgroundColor:"#1E293B",
 
-            tooltip: {
-                trigger: "item",
-                backgroundColor: "#0F172A",
-                textStyle: {
-                    color: "#E2E8F0"
-                }
+        legend:{
+            top:"3%",
+            left:"center",
+            textStyle:{color:"#E2E8F0"}
+        },
+
+
+        series:[{
+
+            type:"pie",
+
+            radius:["50%","70%"],
+
+            center:["50%","55%"],
+
+            label:{
+                color:"#E2E8F0",
+                formatter:p=>
+                p.value+" ("+p.percent.toFixed(1)+"%)"
             },
 
-            legend: {
-								top: "3%",
-								left: "center",
-								textStyle: {
-										color: "#E2E8F0"
-								}
-						},
+            data:rows
 
-            series: [{
+        }]
 
-                type: "pie",
-                radius: ["50%", "70%"],
-                center: ["50%", "50%"],
-                label: {
-                    color: "#E2E8F0",
-                    formatter: p => p.value.toFixed(2) + "M (" + p.percent.toFixed(1) + "%)"
-                },
+    };
 
-                labelLine: {
-                    lineStyle: {
-                        color: "#64748B"
-                    }
-                },
-                data: rows,
-                color: rows.map(r => colors[r.name] || "#94A3B8")
-            }]
+},
 
-        };
 
-    },
 
-    setDefaults() {
+/* ===============================
+   TABLES
+=============================== */
 
-        if (!appsmith.store.ecActiveView)
-            storeValue("ecActiveView", "AggregatedConsumption");
+getLocationTable(){
 
-        if (!appsmith.store.ecUOM)
-            storeValue("ecUOM", "BTU");
+    const data=this.getLocationAggregatedData();
+    const view=this.getActiveView();
+    const uom=this.getUOMLabel();
 
-    }
+
+    return Object.entries(data)
+    .map(([n,d])=>({
+
+        Location:n,
+        Value:this.getValue(d),
+
+        UOM:
+        view==="AggregatedUnitCost"?"$":
+        view==="EnergyUseIntensity"?uom+"/sqft":
+        uom
+
+    }))
+    .sort((a,b)=>b.Value-a.Value);
+
+},
+
+
+
+getMeterTable(){
+
+    const data=this.getMeterAggregatedData();
+    const view=this.getActiveView();
+    const uom=this.getUOMLabel();
+
+
+    return Object.entries(data)
+    .map(([n,d])=>({
+
+        Meter:n,
+        Value:this.getValue(d),
+
+        UOM:
+        view==="AggregatedUnitCost"?"$":
+        view==="EnergyUseIntensity"?uom+"/sqft":
+        uom
+
+    }))
+    .sort((a,b)=>b.Value-a.Value);
+
+},
+
+
+
+getUtilityTable(){
+
+    const data=this.getUtilityAggregatedData();
+    const uom=this.getUOMLabel();
+
+
+    return Object.entries(data)
+    .map(([n,v])=>({
+
+        Utility:n,
+        Value:Number(this.convertMMBTU(v).toFixed(2)),
+        UOM:uom
+
+    }))
+    .sort((a,b)=>b.Value-a.Value);
+
+},
+
+
+
+/* ===============================
+   DEFAULTS
+=============================== */
+
+setDefaults(){
+
+    if(!appsmith.store.ecActiveView)
+        storeValue("ecActiveView","AggregatedConsumption");
+
+    if(!appsmith.store.ecUOM)
+        storeValue("ecUOM","BTU");
+
+}
 
 };

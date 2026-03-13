@@ -54,7 +54,7 @@
       "isDisabled": false,
       "isVisible": true,
       "label": "Export Data",
-      "onClick": "{{\nstoreValue('chartName', \"Time Series\");\ndownload(\nObject.values(AnalyticsHelper.getTableData())\n.map(row => Object.values(row).join(\",\"))\n.join(\"\\n\"),\n\"analytics.csv\",\n\"text/csv\"\n)}}",
+      "onClick": "{{\nstoreValue('chartName', \"WS_TimeSeries\");\ndownload(\nObject.values(AnalyticsHelper.getTableData())\n.map(row => Object.values(row).join(\",\"))\n.join(\"\\n\"),\n\"analytics.csv\",\n\"text/csv\"\n)}}",
       "widgetId": ""
     },
     "menuItem2": {
@@ -62,8 +62,8 @@
       "index": 1,
       "isDisabled": false,
       "isVisible": true,
-      "label": "",
-      "onClick": "{{\nstoreValue('chartName', \"Time Series\");\nshowModal(showTable.name);}}",
+      "label": "Show as a Table",
+      "onClick": "{{\nstoreValue('chartName', \"WS_Time_Series\");\nshowModal(showTable.name);}}",
       "widgetId": ""
     }
   },

@@ -6,14 +6,25 @@ export default {
 						data = RankLocationHelper.getTableData();
 
 				if (Tabs.selectedTab === 'Weather Sensitivity') {
-						if (appsmith.store.chartName === 'Time Series')
+						if (appsmith.store.chartName === 'WS_Time_Series')
 								data = WeatherHelper.getTimeSeriesTable();
 
-						if (appsmith.store.chartName === 'Correlation')
+						if (appsmith.store.chartName === 'WS_Correlation')
 								data = WeatherHelper.getCorrelationTable();
 
-						if (appsmith.store.chartName === 'Scatter')
+						if (appsmith.store.chartName === 'WS_Scatter')
 								data = WeatherHelper.getScatterTable();
+				}
+			
+				if (Tabs.selectedTab === 'Energy Consumption') {
+					if (appsmith.store.chartName === 'EC_Location')
+						data = EnergyConsumptionHelper.getLocationTable();
+
+					if (appsmith.store.chartName === 'EC_Meter')
+						data = EnergyConsumptionHelper.getMeterTable();
+
+					if (appsmith.store.chartName === 'EC_Utility')
+						data = EnergyConsumptionHelper.getUtilityTable();
 				}
 
 				/* Auto format numbers */

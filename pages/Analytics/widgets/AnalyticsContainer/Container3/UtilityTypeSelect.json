@@ -1,57 +1,64 @@
 {
   "accentColor": "{{appsmith.theme.colors.primaryColor}}",
+  "allowClear": false,
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 9,
+  "bottomRow": 8,
   "boxShadow": "none",
-  "defaultOptionValue": "All",
+  "defaultOptionValue": "",
   "dynamicBindingPathList": [
     {
-      "key": "sourceData"
+      "key": "accentColor"
     },
     {
       "key": "borderRadius"
     },
     {
-      "key": "isDisabled"
-    }
-  ],
-  "dynamicPropertyPathList": [
-    {
-      "key": "sourceData"
+      "key": "options"
     },
     {
       "key": "isDisabled"
     }
   ],
-  "dynamicTriggerPathList": [
+  "dynamicHeight": "FIXED",
+  "dynamicPropertyPathList": [
     {
-      "key": "onOptionChange"
+      "key": "isDisabled"
     }
   ],
+  "dynamicTriggerPathList": [],
+  "expandAll": false,
   "isDisabled": "{{Tabs.selectedTab === 'Weather Sensitivity' }}",
-  "isFilterable": true,
   "isLoading": false,
+  "isRequired": false,
   "isVisible": true,
-  "key": "sel_util",
+  "key": "l914oi3d7y",
+  "labelAlignment": "left",
+  "labelPosition": "Top",
   "labelText": "",
+  "labelTextSize": "0.875rem",
+  "labelWidth": 5,
   "leftColumn": 34,
-  "mobileBottomRow": 14,
-  "mobileLeftColumn": 12,
-  "mobileRightColumn": 22,
-  "mobileTopRow": 9,
-  "onOptionChange": "",
-  "optionLabel": "label",
-  "optionValue": "value",
-  "parentColumnSpace": 15,
+  "maxDynamicHeight": 9000,
+  "minDynamicHeight": 4,
+  "minWidth": 450,
+  "mobileBottomRow": 26,
+  "mobileLeftColumn": 38,
+  "mobileRightColumn": 58,
+  "mobileTopRow": 19,
+  "mode": "SHOW_ALL",
+  "needsErrorInfo": false,
+  "options": "{{(fetch_utility_types.data || []).map(d => ({label: d.utility_type, value: d.utility_type}))}}",
+  "parentColumnSpace": 15.268310546875,
   "parentId": "ia1ed10g78",
   "parentRowSpace": 10,
+  "placeholderText": "Select option(s)",
   "renderMode": "CANVAS",
-  "rightColumn": 48,
-  "sourceData": "{{(fetch_utility_types.data || []).map(d => ({label: d.utility_type, value: d.utility_type}))}}",
+  "responsiveBehavior": "fill",
+  "rightColumn": 49,
   "topRow": 4,
-  "type": "SELECT_WIDGET",
+  "type": "MULTI_SELECT_TREE_WIDGET",
   "version": 1,
-  "widgetId": "t3o3md2i1z",
+  "widgetId": "f9aan28lr2",
   "widgetName": "UtilityTypeSelect"
 }

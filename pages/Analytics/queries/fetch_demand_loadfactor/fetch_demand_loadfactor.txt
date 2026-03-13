@@ -23,8 +23,8 @@ WHERE bm.deleted_at IS NULL AND bm.customer_ready IS NOT NULL
 : "" }}
 
 -- Utility Type
-{{ UtilityTypeSelect.selectedOptionValue ?
-	`AND bi.commodity = '${UtilityTypeSelect.selectedOptionValue}'`
+{{ UtilityTypeSelect.selectedOptionValues.length
+? `AND bi.commodity IN ('${UtilityTypeSelect.selectedOptionValues.join("','")}')`
 : "" }}
 
 -- Bill Type
