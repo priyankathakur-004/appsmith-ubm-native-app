@@ -5,7 +5,7 @@
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
   "bottomRow": 8,
   "boxShadow": "none",
-  "defaultOptionValue": "",
+  "defaultOptionValue": "{{ Tabs.selectedTab === \"Weather Sensitivity\" ? [\"ELECTRIC\"] : [] }}",
   "dynamicBindingPathList": [
     {
       "key": "accentColor"
@@ -18,6 +18,9 @@
     },
     {
       "key": "isDisabled"
+    },
+    {
+      "key": "defaultOptionValue"
     }
   ],
   "dynamicHeight": "FIXED",
@@ -48,7 +51,7 @@
   "mobileTopRow": 19,
   "mode": "SHOW_ALL",
   "needsErrorInfo": false,
-  "options": "{{(fetch_utility_types.data || []).map(d => ({label: d.utility_type, value: d.utility_type}))}}",
+  "options": "{{fetch_utility_types.data.map(d => ({label: d.utility_type, value: d.utility_type}))}}",
   "parentColumnSpace": 15.268310546875,
   "parentId": "ia1ed10g78",
   "parentRowSpace": 10,

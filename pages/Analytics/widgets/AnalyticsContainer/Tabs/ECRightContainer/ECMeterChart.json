@@ -4,13 +4,13 @@
   "bottomRow": 38,
   "boxShadow": "none",
   "chartType": "CUSTOM_ECHART",
-  "customEChartConfig": "{{EnergyConsumptionHelper.getMeterChartConfig()}}",
+  "customEChartConfig": "{{ ((chartType) => ( \nEnergyConsumptionHelper.getMeterChartConfig()\n))(ECMeterChart.chartType) }}",
   "dynamicBindingPathList": [
     {
-      "key": "customEChartConfig"
+      "key": "borderRadius"
     },
     {
-      "key": "borderRadius"
+      "key": "customEChartConfig"
     }
   ],
   "dynamicTriggerPathList": [],

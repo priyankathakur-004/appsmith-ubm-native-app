@@ -3,7 +3,7 @@
   "borderColor": "",
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
   "borderWidth": "1",
-  "bottomRow": 50,
+  "bottomRow": 229,
   "boxShadow": "{{appsmith.theme.boxShadow.appBoxShadow}}",
   "defaultModel": "{{ {\ndata: MonthlyEnergyHelper.getLocationOptions(),\nselected: MonthlyEnergyHelper.getLocationOptions().map(o => o.value)\n}\n}}",
   "dynamicBindingPathList": [
@@ -46,7 +46,7 @@
   "mobileTopRow": 145,
   "needsErrorInfo": false,
   "onResetClick": "{{showAlert('Successfully reset!!', '');}}",
-  "originalBottomRow": 190,
+  "originalBottomRow": 14,
   "originalTopRow": 9,
   "parentColumnSpace": 16.734375,
   "parentId": "op4pghclvd",

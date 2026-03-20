@@ -28,13 +28,13 @@ export default {
 			return { label: loc, value: loc };
 		});
 	},
-
+	
 	getSelectedLocations() {
-		var widget = PSFLocCheckbox;
-		if (widget && widget.selectedValues && widget.selectedValues.length > 0) {
-			return widget.selectedValues;
+		const stored = appsmith.store.PSFLocCheckbox;
+		if (stored && stored.length > 0) {
+			return stored;
 		}
-		return this.getLocationOptions().map(function(o) { return o.value; });
+		return this.getLocationOptions().map(o => o.value);
 	},
 
 	getPerSqftData() {

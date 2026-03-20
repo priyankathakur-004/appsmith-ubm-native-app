@@ -32,11 +32,11 @@
     }
   },
   "columnOrder": [
+    "Value",
     "UOM",
-    "Location",
-    "Value"
+    "Location"
   ],
-  "columnUpdatedAt": 1772526628928,
+  "columnUpdatedAt": 1774001356299,
   "columnWidthMap": {
     "month": 308
   },
@@ -62,13 +62,13 @@
       "key": "tableData"
     },
     {
+      "key": "primaryColumns.Value.computedValue"
+    },
+    {
       "key": "primaryColumns.UOM.computedValue"
     },
     {
       "key": "primaryColumns.Location.computedValue"
-    },
-    {
-      "key": "primaryColumns.Value.computedValue"
     }
   ],
   "dynamicPropertyPathList": [

@@ -71,9 +71,4 @@ export default {
 			removeValue('mecUOM');
 		},
 	
-		setDefaults() {
-			if (Tabs.selectedTab === 'Weather Sensitivity') { 
-				 UtilityTypeSelect.setSelectedOption("ELECTRIC");
-			}
-		}
 }

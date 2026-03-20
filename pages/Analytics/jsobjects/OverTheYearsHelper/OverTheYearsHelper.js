@@ -10,12 +10,12 @@ export default {
 	},
 
 	getSelectedLocations() {
-		const widget = OTYLocCheckbox;
-		if (widget && widget.selectedValues && widget.selectedValues.length > 0) {
-			return widget.selectedValues;
-		}
-		return this.getLocationOptions().map(o => o.value);
-	},
+				const stored = appsmith.store.OTYLocCheckbox;
+				if (stored && stored.length > 0) {
+						return stored;
+				}
+				return this.getLocationOptions().map(o => o.value);
+		},
 
 	getViewBy() {
 		return appsmith.store.otyViewBy || 'Location';
