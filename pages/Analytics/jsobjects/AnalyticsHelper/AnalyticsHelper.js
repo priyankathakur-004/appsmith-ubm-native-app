@@ -15,6 +15,17 @@ export default {
 						if (appsmith.store.chartName === 'Scatter')
 								data = WeatherHelper.getScatterTable();
 				}
+			
+				if (Tabs.selectedTab === 'Energy Consumption') {
+						if (appsmith.store.chartName === 'EC_Location')
+							data = EnergyConsumptionHelper.getLocationTable();
+
+						if (appsmith.store.chartName === 'EC_Meter')
+							data = EnergyConsumptionHelper.getMeterTable();
+
+						if (appsmith.store.chartName === 'EC_Utility')
+							data = EnergyConsumptionHelper.getUtilityTable();
+				}
 
 				/* Auto format numbers */
 				return data.map(row => {

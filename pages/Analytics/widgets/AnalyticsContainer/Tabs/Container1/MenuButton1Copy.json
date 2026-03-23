@@ -62,7 +62,7 @@
       "index": 1,
       "isDisabled": false,
       "isVisible": true,
-      "label": "",
+      "label": "Show as a Table",
       "onClick": "{{\nstoreValue('chartName', \"Time Series\");\nshowModal(showTable.name);}}",
       "widgetId": ""
     }
