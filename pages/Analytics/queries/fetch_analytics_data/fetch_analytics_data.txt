@@ -4,11 +4,13 @@ SELECT
     m.utility_type,
     m.bill_type,
     m.location_id,
+    m.client_account as service_account,
+    m.meter_serial as meter,
     m.location_description,
-        l.address,
-        l.state,
-        l.city,
-        l.square_feet,
+    l.address,
+    l.state,
+    l.city,
+    l.square_feet,
 
     CASE 
         WHEN m.bill_type = 'Supply Only' 

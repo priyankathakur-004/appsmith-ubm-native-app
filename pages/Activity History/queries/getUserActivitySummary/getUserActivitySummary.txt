@@ -26,4 +26,3 @@ GROUP BY
     u.email,
     u.profile
 ORDER BY user_name ASC
-

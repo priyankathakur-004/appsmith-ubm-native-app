@@ -1,10 +1,10 @@
 {
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 330,
+  "bottomRow": 105,
   "boxShadow": "none",
   "chartType": "CUSTOM_ECHART",
-  "customEChartConfig": "{{UtilityTreeHelper.getTreeChartConfig()}}",
+  "customEChartConfig": "{{OverTheYearsHelper.getConsumptionByLocationConfig()}}",
   "dynamicBindingPathList": [
     {
       "key": "customEChartConfig"
@@ -16,20 +16,20 @@
   "dynamicTriggerPathList": [],
   "isLoading": false,
   "isVisible": true,
-  "key": "fgwun0siyq",
+  "key": "otyconslocchart1",
   "leftColumn": 0,
-  "mobileBottomRow": 330,
+  "mobileBottomRow": 105,
   "mobileLeftColumn": 0,
   "mobileRightColumn": 64,
-  "mobileTopRow": 9,
+  "mobileTopRow": 60,
   "parentColumnSpace": 15,
-  "parentId": "rd8m8b3fsx",
+  "parentId": "ukzzqnbbtt",
   "parentRowSpace": 10,
   "renderMode": "CANVAS",
-  "rightColumn": 64,
-  "topRow": 9,
+  "rightColumn": 62,
+  "topRow": 59,
   "type": "CHART_WIDGET",
   "version": 1,
-  "widgetId": "802cb4n1vj",
-  "widgetName": "UTTreeChart"
+  "widgetId": "otyconslocchart1",
+  "widgetName": "OTYConsByLocChart"
 }

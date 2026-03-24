@@ -372,7 +372,7 @@
   },
   "renderMode": "CANVAS",
   "responsiveBehavior": "fill",
-  "rightColumn": 64,
+  "rightColumn": 63,
   "searchKey": "",
   "serverSidePaginationEnabled": true,
   "tableData": "{{ \ngetActivityHistory.data.length ? getActivityHistory.data : [{ message: \"No data available.\" }] \n}}",
