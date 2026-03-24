@@ -32,6 +32,17 @@ export default {
 							data = MonthlyEnergyHelper.getMonthlyTable();
 				}
 
+				if (Tabs.selectedTab === 'Over the Years') {
+						if (appsmith.store.chartName === 'OTY_Charges')
+							data = OverTheYearsHelper.getChargesTable();
+
+						if (appsmith.store.chartName === 'OTY_Consumption')
+							data = OverTheYearsHelper.getConsumptionTable();
+
+						if (appsmith.store.chartName === 'OTY_UnitCost')
+							data = OverTheYearsHelper.getUnitCostTable();
+				}
+
 				/* Auto format numbers */
 				return data.map(row => {
 						const r = {};
@@ -76,13 +87,15 @@ export default {
 			removeValue('mecUOM');
 			removeValue('mecSelectedLocation');
 			removeValue('ecSelectedLocation');
+			removeValue('otySelectedLocation');
 		},
-	
+
 		setDefaults() {
 			if (Tabs.selectedTab === 'Weather Sensitivity') {
 				 UtilityTypeSelect.setSelectedOption("ELECTRIC");
 			}
 			removeValue('mecSelectedLocation');
 			removeValue('ecSelectedLocation');
+			removeValue('otySelectedLocation');
 		}
 }
