@@ -10,9 +10,9 @@ export default {
 	},
 
 	getSelectedLocations() {
-		const widget = OTYLocCheckbox;
-		if (widget && widget.selectedValues && widget.selectedValues.length > 0) {
-			return widget.selectedValues;
+		const loc = appsmith.store.otySelectedLocation;
+		if (loc) {
+			return [loc];
 		}
 		return this.getLocationOptions().map(o => o.value);
 	},
@@ -39,7 +39,6 @@ export default {
 			const lat = parseFloat(r.latitude);
 			const lng = parseFloat(r.longitude);
 			if (!isNaN(lat) && !isNaN(lng) && !markers[loc]) {
-				const charges = parseFloat(r.total_charges) || 0;
 				markers[loc] = { lat: lat, long: lng, title: loc, color: '#3B82F6' };
 			}
 		});
@@ -56,7 +55,7 @@ export default {
 			const loc = r.location_description || 'Unknown';
 			if (!selectedLocs.includes(loc)) return;
 
-			const date = r.bill_start_date || r.read_date || '';
+			const date = r.time_period || '';
 			if (!date) return;
 			const year = date.substring(0, 4);
 			const monthNum = parseInt(date.substring(5, 7));
@@ -119,18 +118,18 @@ export default {
 		}));
 
 		return {
-			backgroundColor: 'transparent',
+			backgroundColor: '#1E293B',
 			tooltip: {
 				trigger: 'axis',
-				backgroundColor: '#1e293b',
+				backgroundColor: '#0F172A',
 				borderColor: '#334155',
-				textStyle: { color: '#e2e8f0' }
+				textStyle: { color: '#E2E8F0' }
 			},
 			legend: {
 				right: 10,
 				top: 5,
 				orient: 'vertical',
-				textStyle: { color: '#e2e8f0', fontSize: 12 },
+				textStyle: { color: '#E2E8F0', fontSize: 12 },
 				icon: 'circle',
 				itemWidth: 10,
 				itemHeight: 10,
@@ -140,18 +139,18 @@ export default {
 			xAxis: {
 				type: 'category',
 				data: months,
-				axisLabel: { color: '#94a3b8', fontSize: 11 },
-				axisLine: { lineStyle: { color: '#334155' } },
+				axisLabel: { color: '#CBD5E1', fontSize: 11 },
+				axisLine: { lineStyle: { color: '#475569' } },
 				splitLine: { show: false }
 			},
 			yAxis: {
 				type: 'value',
 				axisLabel: {
-					color: '#94a3b8',
+					color: '#CBD5E1',
 					formatter: yAxisFormatter
 				},
-				axisLine: { lineStyle: { color: '#334155' } },
-				splitLine: { lineStyle: { color: '#1e293b', type: 'dashed' } }
+				axisLine: { lineStyle: { color: '#475569' } },
+				splitLine: { lineStyle: { color: '#334155', type: 'dashed' } }
 			},
 			series: series
 		};
