@@ -1,6 +1,6 @@
 {
-  "gitSyncId": "69a59102e5a8525f403966eb_4e42fb46-9071-4c79-a820-2c827f979fce",
-  "id": "Analytics_EnergyConsumptionHelper._getXLabel",
+  "gitSyncId": "69a59102e5a8525f403966eb_a68aec4e-b544-4793-8604-04e05acd4d8c",
+  "id": "Analytics_EnergyConsumptionHelper._aggregate",
   "pluginId": "js-plugin",
   "pluginType": "JS",
   "unpublishedAction": {
@@ -8,10 +8,7 @@
       "encodeParamsToggle": true,
       "jsArguments": [
         {
-          "name": "view"
-        },
-        {
-          "name": "uom"
+          "name": "keyFn"
         }
       ],
       "paginationType": "NONE",
@@ -29,8 +26,8 @@
         "key": "body"
       }
     ],
-    "fullyQualifiedName": "EnergyConsumptionHelper._getXLabel",
-    "name": "_getXLabel",
+    "fullyQualifiedName": "EnergyConsumptionHelper._aggregate",
+    "name": "_aggregate",
     "pageId": "Analytics",
     "runBehaviour": "MANUAL",
     "userSetOnLoad": false

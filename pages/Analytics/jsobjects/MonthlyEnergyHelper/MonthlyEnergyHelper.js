@@ -1,29 +1,18 @@
 export default {
-	getBTUConversionFactor(utilityType, uom) {
-		const btuFactors = {
-			'ELECTRIC': 3412.14,
-			'NATURALGAS': 102800,
-			'OIL2': 138500,
-			'STEAM': 1000,
-			'WATER': 0,
-			'SEWER': 0
-		};
-		const baseBTU = btuFactors[utilityType] || 0;
-		const selectedUOM = uom || appsmith.store.mecUOM || 'BTU';
-		if (selectedUOM === 'Wh') return baseBTU * 0.29307107;
-		if (selectedUOM === 'Joule') return baseBTU * 1055.06;
-		return baseBTU;
-	},
 
-	getUOMLabel() {
-		const uom = appsmith.store.mecUOM || 'BTU';
-		if (uom === 'Wh') return 'Watt hour';
-		if (uom === 'Joule') return 'Joule';
-		return 'mmBTU';
-	},
+	/* ===============================
+	   ACTIVE SETTINGS
+	=============================== */
 
 	getActiveView() {
 		return appsmith.store.mecActiveView || 'Consumption';
+	},
+
+	getUOMLabel() {
+		const u = appsmith.store.mecUOM || 'BTU';
+		if (u === 'Wh') return 'Watt hour';
+		if (u === 'Joule') return 'Joule';
+		return 'mmBTU';
 	},
 
 	getChartType() {
@@ -32,7 +21,6 @@ export default {
 
 	getChartTitle() {
 		const view = this.getActiveView();
-		const uomLabel = this.getUOMLabel();
 		const titles = {
 			'Consumption': 'Monthly energy consumption by location',
 			'UnitCost': 'Monthly unit cost by location',
@@ -40,6 +28,30 @@ export default {
 		};
 		return titles[view] || titles['Consumption'];
 	},
+
+	/* ===============================
+	   UNIT CONVERSION
+	=============================== */
+
+	getBTUConversionFactor(utilityType, uom) {
+		const map = {
+			ELECTRIC: 3412,
+			NATURALGAS: 102800,
+			OIL2: 138500,
+			STEAM: 1000,
+			WATER: 0,
+			SEWER: 0
+		};
+		const base = map[utilityType] || 0;
+		const u = uom || appsmith.store.mecUOM || 'BTU';
+		if (u === 'Wh') return base * 0.29307107;
+		if (u === 'Joule') return base * 1055.06;
+		return base;
+	},
+
+	/* ===============================
+	   LOCATION OPTIONS
+	=============================== */
 
 	getLocationOptions() {
 		const raw = fetch_analytics_data.data || [];
@@ -59,9 +71,30 @@ export default {
 		return this.getLocationOptions().map(o => o.value);
 	},
 
+	/* ===============================
+	   VALUE CALCULATION
+	=============================== */
+
+	_computeValue(d, view) {
+		const u = appsmith.store.mecUOM || 'BTU';
+		const scale = u === 'Joule' ? 1 : 1000;
+
+		if (view === 'UnitCost')
+			return d.cons ? (d.charges * 1000) / (d.cons * scale) : 0;
+
+		if (view === 'EnergyUseIntensity')
+			return d.sqft ? (d.cons * scale) / d.sqft : 0;
+
+		return u === 'Joule' ? d.cons / 1000 : d.cons;
+	},
+
+	/* ===============================
+	   MONTHLY AGGREGATED DATA
+	=============================== */
+
 	getMonthlyData() {
 		const raw = fetch_analytics_data.data || [];
-		const uom = appsmith.store.mecUOM || 'BTU';
+		const u = appsmith.store.mecUOM || 'BTU';
 		const selectedLocs = this.getSelectedLocations();
 		const byLocMonth = {};
 
@@ -69,21 +102,42 @@ export default {
 			const loc = r.location_description || 'Unknown';
 			if (!selectedLocs.includes(loc)) return;
 
-			const date = r.bill_start_date || r.read_date || '';
+			const date = r.time_period || '';
 			const month = date.substring(0, 7);
 			if (!month) return;
 
 			if (!byLocMonth[loc]) byLocMonth[loc] = {};
-			if (!byLocMonth[loc][month]) byLocMonth[loc][month] = { consumption: 0, charges: 0, sqft: parseFloat(r.square_feet) || 0 };
+			if (!byLocMonth[loc][month])
+				byLocMonth[loc][month] = { cons: 0, charges: 0, sqft: Number(r.square_feet) || 0 };
 
-			const factor = this.getBTUConversionFactor(r.utility_type, uom);
-			const cons = parseFloat(r.consumption) || 0;
-			byLocMonth[loc][month].consumption += (cons * factor) / 1000000;
-			byLocMonth[loc][month].charges += parseFloat(r.total_charges) || 0;
+			const f = this.getBTUConversionFactor(r.utility_type, u);
+			byLocMonth[loc][month].cons += ((Number(r.consumption) || 0) * f) / 1000000;
+			byLocMonth[loc][month].charges += Number(r.total_charges) || 0;
 		});
 
 		return byLocMonth;
 	},
+
+	/* ===============================
+	   CHART HELPERS
+	=============================== */
+
+	_getYLabel(view, uom) {
+		if (view === 'UnitCost') return 'Unit Cost ($/mm' + uom + ')';
+		if (view === 'EnergyUseIntensity') return 'EUI (' + uom + '/sqft)';
+		return 'Equivalent Energy Consumption (' + uom + ')';
+	},
+
+	_getUOMColumnLabel(view) {
+		const uom = this.getUOMLabel();
+		if (view === 'UnitCost') return '$/mm' + uom;
+		if (view === 'EnergyUseIntensity') return uom + '/sqft';
+		return uom;
+	},
+
+	/* ===============================
+	   MONTHLY CHART CONFIG
+	=============================== */
 
 	getMonthlyChartConfig() {
 		const byLocMonth = this.getMonthlyData();
@@ -100,20 +154,17 @@ export default {
 		const monthLabels = sortedMonths.map(m => {
 			const parts = m.split('-');
 			const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-			return monthNames[parseInt(parts[1])-1] + ' ' + parts[0].substring(2);
+			return monthNames[parseInt(parts[1]) - 1] + ' ' + parts[0];
 		});
 
-		const colors = ['#3B82F6','#10B981','#F59E0B','#EF4444','#8B5CF6','#EC4899','#06B6D4','#84CC16','#F97316','#6366F1','#14B8A6','#E11D48','#A855F7','#0EA5E9','#D946EF'];
+		const colors = ['#3366CC','#22AA66','#DD8844','#555555','#8B5CF6','#EC4899','#06B6D4','#84CC16','#F97316','#6366F1','#14B8A6','#E11D48','#A855F7','#0EA5E9','#D946EF'];
 
 		const locations = Object.keys(byLocMonth).sort();
 		const series = locations.map((loc, idx) => {
 			const data = sortedMonths.map(m => {
 				const d = (byLocMonth[loc] || {})[m];
-				if (!d) return null;
-				let val = d.consumption;
-				if (view === 'UnitCost') val = d.charges;
-				if (view === 'EnergyUseIntensity') val = d.sqft > 0 ? d.consumption / d.sqft : 0;
-				return Number(val.toFixed(2));
+				if (!d) return 0;
+				return Number(this._computeValue(d, view).toFixed(2));
 			});
 			return {
 				name: loc,
@@ -125,32 +176,32 @@ export default {
 			};
 		});
 
-		let yLabel = 'Equivalent Energy Consumption (' + uomLabel + ')';
-		if (view === 'UnitCost') yLabel = 'Total Charges ($)';
-		if (view === 'EnergyUseIntensity') yLabel = 'Energy Use Intensity (' + uomLabel + '/sqft)';
+		const yLabel = this._getYLabel(view, uomLabel);
 
 		return {
-			backgroundColor: 'transparent',
+			backgroundColor: '#1E293B',
 			tooltip: {
-				trigger: chartType === 'scatter' ? 'item' : 'axis',
-				backgroundColor: '#1e293b',
+				trigger: 'axis',
+				backgroundColor: '#0F172A',
 				borderColor: '#334155',
-				textStyle: { color: '#e2e8f0' }
+				textStyle: { color: '#E2E8F0' }
 			},
 			legend: {
 				type: 'scroll',
-				bottom: 0,
-				textStyle: { color: '#e2e8f0', fontSize: 11 },
-				pageTextStyle: { color: '#94a3b8' },
-				pageIconColor: '#94a3b8',
+				orient: 'vertical',
+				right: 10,
+				top: 'middle',
+				textStyle: { color: '#E2E8F0', fontSize: 11 },
+				pageTextStyle: { color: '#94A3B8' },
+				pageIconColor: '#94A3B8',
 				pageIconInactiveColor: '#334155'
 			},
-			grid: { left: 80, right: 30, top: 20, bottom: 60 },
+			grid: { left: 80, right: 160, top: 20, bottom: 60 },
 			xAxis: {
 				type: 'category',
 				data: monthLabels,
-				axisLabel: { color: '#94a3b8', rotate: 45, fontSize: 11 },
-				axisLine: { lineStyle: { color: '#334155' } },
+				axisLabel: { color: '#CBD5E1', fontSize: 11 },
+				axisLine: { lineStyle: { color: '#475569' } },
 				splitLine: { show: false }
 			},
 			yAxis: {
@@ -158,19 +209,18 @@ export default {
 				name: yLabel,
 				nameLocation: 'middle',
 				nameGap: 55,
-				nameTextStyle: { color: '#94a3b8', fontSize: 12 },
-				axisLabel: {
-					color: '#94a3b8',
-					formatter: function(v) {
-						return v >= 1000000 ? (v/1000000).toFixed(1)+'M' : v >= 1000 ? (v/1000).toFixed(0)+'K' : v;
-					}
-				},
-				axisLine: { lineStyle: { color: '#334155' } },
-				splitLine: { lineStyle: { color: '#1e293b' } }
+				nameTextStyle: { color: '#CBD5E1', fontSize: 12 },
+				axisLabel: { color: '#CBD5E1' },
+				axisLine: { lineStyle: { color: '#475569' } },
+				splitLine: { lineStyle: { color: '#334155', type: 'dashed' } }
 			},
 			series: series
 		};
 	},
+
+	/* ===============================
+	   DEFAULTS
+	=============================== */
 
 	setDefaults() {
 		if (!appsmith.store.mecActiveView) storeValue('mecActiveView', 'Consumption');
