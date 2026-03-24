@@ -226,25 +226,36 @@ export default {
 		const byLocMonth = this.getMonthlyData();
 		const view = this.getActiveView();
 		const uomLabel = this._getUOMColumnLabel(view);
+		const valLabel = this._getValueLabel();
 		const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-		const rows = [];
 
-		Object.keys(byLocMonth).sort().forEach(loc => {
-			const months = byLocMonth[loc];
-			Object.keys(months).sort().forEach(m => {
-				const d = months[m];
-				const parts = m.split('-');
-				const monthLabel = monthNames[parseInt(parts[1]) - 1] + ' ' + parts[0];
-				rows.push({
-					Location: loc,
-					Month: monthLabel,
-					Value: Number(this._computeValue(d, view).toFixed(2)),
-					UOM: uomLabel
-				});
-			});
+		const allMonths = new Set();
+		Object.values(byLocMonth).forEach(months => {
+			Object.keys(months).forEach(m => allMonths.add(m));
 		});
+		const sortedMonths = Array.from(allMonths).sort();
+		const locations = Object.keys(byLocMonth).sort();
 
-		return rows;
+		return sortedMonths.map(m => {
+			const parts = m.split('-');
+			const monthLabel = monthNames[parseInt(parts[1]) - 1] + ' ' + parts[0];
+			const row = { MonthYear: monthLabel };
+
+			locations.forEach(loc => {
+				const d = (byLocMonth[loc] || {})[m];
+				row[loc + ' ' + valLabel] = d ? Number(this._computeValue(d, view).toFixed(2)) : 0;
+				row[loc + ' Selected UOM'] = uomLabel;
+			});
+
+			return row;
+		});
+	},
+	
+	_getValueLabel() {
+		const view = this.getActiveView();
+		if (view === 'UnitCost') return 'Unit Cost';
+		if (view === 'EnergyUseIntensity') return 'Energy Use Intensity';
+		return 'Consumption';
 	},
 
 	/* ===============================
