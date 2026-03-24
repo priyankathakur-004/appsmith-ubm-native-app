@@ -27,6 +27,11 @@ export default {
 							data = EnergyConsumptionHelper.getUtilityTable();
 				}
 
+				if (Tabs.selectedTab === 'Monthly Energy Consumption') {
+						if (appsmith.store.chartName === 'MEC_Monthly')
+							data = MonthlyEnergyHelper.getMonthlyTable();
+				}
+
 				/* Auto format numbers */
 				return data.map(row => {
 						const r = {};
@@ -69,11 +74,15 @@ export default {
 			removeValue('mecActiveView');
 			removeValue('mecChartType');
 			removeValue('mecUOM');
+			removeValue('mecSelectedLocation');
+			removeValue('ecSelectedLocation');
 		},
 	
 		setDefaults() {
-			if (Tabs.selectedTab === 'Weather Sensitivity') { 
+			if (Tabs.selectedTab === 'Weather Sensitivity') {
 				 UtilityTypeSelect.setSelectedOption("ELECTRIC");
 			}
+			removeValue('mecSelectedLocation');
+			removeValue('ecSelectedLocation');
 		}
 }

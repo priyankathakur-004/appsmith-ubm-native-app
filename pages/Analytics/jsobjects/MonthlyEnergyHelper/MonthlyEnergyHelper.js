@@ -64,9 +64,9 @@ export default {
 	},
 
 	getSelectedLocations() {
-		const widget = MECLocCheckbox;
-		if (widget && widget.selectedValues && widget.selectedValues.length > 0) {
-			return widget.selectedValues;
+		const loc = appsmith.store.mecSelectedLocation;
+		if (loc) {
+			return [loc];
 		}
 		return this.getLocationOptions().map(o => o.value);
 	},
@@ -216,6 +216,35 @@ export default {
 			},
 			series: series
 		};
+	},
+
+	/* ===============================
+	   TABLE DATA
+	=============================== */
+
+	getMonthlyTable() {
+		const byLocMonth = this.getMonthlyData();
+		const view = this.getActiveView();
+		const uomLabel = this._getUOMColumnLabel(view);
+		const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+		const rows = [];
+
+		Object.keys(byLocMonth).sort().forEach(loc => {
+			const months = byLocMonth[loc];
+			Object.keys(months).sort().forEach(m => {
+				const d = months[m];
+				const parts = m.split('-');
+				const monthLabel = monthNames[parseInt(parts[1]) - 1] + ' ' + parts[0];
+				rows.push({
+					Location: loc,
+					Month: monthLabel,
+					Value: Number(this._computeValue(d, view).toFixed(2)),
+					UOM: uomLabel
+				});
+			});
+		});
+
+		return rows;
 	},
 
 	/* ===============================

@@ -27,10 +27,14 @@
   "dynamicTriggerPathList": [
     {
       "key": "onResetClick"
+    },
+    {
+      "key": "onSelectChange"
     }
   ],
   "events": [
-    "onResetClick"
+    "onResetClick",
+    "onSelectChange"
   ],
   "isCanvas": false,
   "isLoading": false,
@@ -45,7 +49,8 @@
   "mobileRightColumn": 19,
   "mobileTopRow": 145,
   "needsErrorInfo": false,
-  "onResetClick": "{{showAlert('Successfully reset!!', '');}}",
+  "onResetClick": "{{removeValue('mecSelectedLocation'); showAlert('Successfully reset!!', '');}}",
+  "onSelectChange": "{{MECLocCheckbox.model.selectedValue ? storeValue('mecSelectedLocation', MECLocCheckbox.model.selectedValue) : removeValue('mecSelectedLocation');}}",
   "originalBottomRow": 190,
   "originalTopRow": 9,
   "parentColumnSpace": 16.734375,
