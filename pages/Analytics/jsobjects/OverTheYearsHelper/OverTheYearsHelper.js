@@ -55,7 +55,7 @@ export default {
 			const loc = r.location_description || 'Unknown';
 			if (!selectedLocs.includes(loc)) return;
 
-			const date = r.time_period || '';
+			const date = r.bill_start_date || r.read_date || '';
 			if (!date) return;
 			const year = date.substring(0, 4);
 			const monthNum = parseInt(date.substring(5, 7));
