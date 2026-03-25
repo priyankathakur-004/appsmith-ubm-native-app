@@ -1,10 +1,10 @@
 {
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 89,
+  "bottomRow": 97,
   "boxShadow": "none",
   "chartType": "CUSTOM_ECHART",
-  "customEChartConfig": "{{OverTheYearsHelper.getConsumptionChartConfig()}}",
+  "customEChartConfig": "{{ ((chartType) => ( OverTheYearsHelper.getConsumptionChartConfig()))(OTYConsumptionChart.chartType) }}",
   "dynamicBindingPathList": [
     {
       "key": "customEChartConfig"
@@ -27,7 +27,7 @@
   "parentRowSpace": 10,
   "renderMode": "CANVAS",
   "rightColumn": 64,
-  "topRow": 47,
+  "topRow": 50,
   "type": "CHART_WIDGET",
   "version": 1,
   "widgetId": "2p0ynkvzpe",

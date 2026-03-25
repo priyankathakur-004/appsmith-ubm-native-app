@@ -3,7 +3,7 @@
   "borderColor": "",
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
   "borderWidth": "1",
-  "bottomRow": 86,
+  "bottomRow": 100,
   "boxShadow": "{{appsmith.theme.boxShadow.appBoxShadow}}",
   "defaultModel": "{{ {\ndata: OverTheYearsHelper.getLocationOptions(),\nselected: OverTheYearsHelper.getLocationOptions().map(o => o.value)\n}\n}}",
   "dynamicBindingPathList": [

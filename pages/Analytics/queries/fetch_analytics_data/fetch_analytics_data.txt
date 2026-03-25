@@ -27,11 +27,7 @@ FROM bill_management_v2.reports_customer_monthly_usage m
 INNER JOIN bill_management_v2.locations l 
     ON l.id = m.location_id
 
-WHERE 1=1
-
-{{ CustomerSelect.selectedOptionValue ?
-    `AND m.customer_id = '${CustomerSelect.selectedOptionValue}'`
-: "" }}
+WHERE  m.customer_id = {{CustomerSelect.selectedOptionValue || 76013 }}
 
 {{ DateSelect.selectedOptionValues.filter(d => d.includes('-')).length > 0 ?
     `AND m.time_period IN (${ DateSelect.selectedOptionValues.filter(d => d.includes('-')).map(d => `'${d}'`).join(",")})`

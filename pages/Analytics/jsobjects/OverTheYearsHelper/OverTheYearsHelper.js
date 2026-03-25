@@ -2,30 +2,28 @@ export default {
 	getLocationOptions() {
 		const raw = fetch_analytics_data.data || [];
 		const locs = new Set();
+
 		raw.forEach(r => {
-			const loc = r.location_description || 'Unknown';
-			locs.add(loc);
+			locs.add((r.location_description || "Unknown").trim());
 		});
-		return Array.from(locs).sort().map(loc => ({ label: loc, value: loc }));
+
+		return Array.from(locs)
+			.sort()
+			.map(loc => ({ label: loc, value: loc }));
 	},
 
 	getSelectedLocations() {
-		const loc = appsmith.store.otySelectedLocation;
-		if (loc) {
-			return [loc];
+		const locs = appsmith.store.otySelectedLocation;
+
+		if (Array.isArray(locs) && locs.length) {
+			return locs.map(l => l.trim());
 		}
+
 		return this.getLocationOptions().map(o => o.value);
 	},
 
 	getViewBy() {
-		return appsmith.store.otyViewBy || 'Location';
-	},
-
-	getGroupKey(record) {
-		const viewBy = this.getViewBy();
-		if (viewBy === 'ServiceAccount') return record.location_id || 'Unknown';
-		if (viewBy === 'Meter') return (record.location_id || '') + ' - ' + (record.meter_id || '');
-		return record.location_description || 'Unknown';
+		return appsmith.store.otyViewBy || "Location";
 	},
 
 	getMapMarkers() {
@@ -34,12 +32,20 @@ export default {
 		const markers = {};
 
 		raw.forEach(r => {
-			const loc = r.location_description || 'Unknown';
-			if (!selectedLocs.includes(loc)) return;
-			const lat = parseFloat(r.latitude);
-			const lng = parseFloat(r.longitude);
+			const loc = (r.location_description || "Unknown").trim();
+
+			if (!selectedLocs.some(l => l === loc)) return;
+
+			const lat = Number(r.latitude);
+			const lng = Number(r.longitude);
+
 			if (!isNaN(lat) && !isNaN(lng) && !markers[loc]) {
-				markers[loc] = { lat: lat, long: lng, title: loc, color: '#3B82F6' };
+				markers[loc] = {
+					lat,
+					long: lng,
+					title: loc,
+					color: "#3B82F6"
+				};
 			}
 		});
 
@@ -49,136 +55,139 @@ export default {
 	getYearlyMonthlyData() {
 		const raw = fetch_analytics_data.data || [];
 		const selectedLocs = this.getSelectedLocations();
-		const byYearMonth = {};
+		const result = {};
+
+		const MIN_CONSUMPTION = 0; // remove noisy data
 
 		raw.forEach(r => {
-			const loc = r.location_description || 'Unknown';
-			if (!selectedLocs.includes(loc)) return;
+			const loc = (r.location_description || "Unknown").trim();
+			if (!selectedLocs.some(l => l === loc)) return;
 
-			const date = r.bill_start_date || r.read_date || '';
-			if (!date) return;
-			const year = date.substring(0, 4);
-			const monthNum = parseInt(date.substring(5, 7));
-			if (!year || isNaN(monthNum)) return;
+			const dateStr = r.time_period || '';
+			if (!dateStr) return;
 
-			if (!byYearMonth[year]) byYearMonth[year] = {};
-			if (!byYearMonth[year][monthNum]) {
-				byYearMonth[year][monthNum] = { charges: 0, consumption: 0, unitCost: 0, count: 0 };
+			// SAFE DATE PARSE
+			const parts = dateStr.split("-");
+			const year = Number(parts[0]);
+			const month = Number(parts[1]);
+
+			if (!year || !month) return;
+
+			const charges = parseFloat(r.total_charges);
+			const consumption = parseFloat(r.consumption);
+
+			// FILTER BAD DATA
+			if (isNaN(consumption) || consumption < MIN_CONSUMPTION) return;
+			if (isNaN(charges) || charges <= 0) return;
+
+			if (!result[year]) result[year] = {};
+			if (!result[year][month]) {
+				result[year][month] = {
+					charges: 0,
+					consumption: 0,
+					unitCost: 0
+				};
 			}
 
-			byYearMonth[year][monthNum].charges += parseFloat(r.total_charges) || 0;
-			byYearMonth[year][monthNum].consumption += parseFloat(r.consumption) || 0;
-			byYearMonth[year][monthNum].count += 1;
+			result[year][month].charges += charges;
+			result[year][month].consumption += consumption;
 		});
 
-		Object.keys(byYearMonth).forEach(year => {
-			Object.keys(byYearMonth[year]).forEach(month => {
-				const d = byYearMonth[year][month];
-				d.unitCost = d.consumption > 0 ? d.charges / d.consumption : 0;
+		// CALCULATE UNIT COST
+		Object.keys(result).forEach(year => {
+			Object.keys(result[year]).forEach(month => {
+				const d = result[year][month];
+
+				if (d.consumption > 0 && d.charges > 0) {
+					const uc = d.charges / d.consumption;
+					d.unitCost = uc > 1 ? 0 : uc; // cap spikes
+				} else {
+					d.unitCost = 0;
+				}
 			});
 		});
 
-		return byYearMonth;
+		return result;
 	},
 
-	getUnitCostTitle() {
-		const raw = fetch_analytics_data.data || [];
-		const units = new Set();
-		raw.forEach(r => { if (r.unit_of_measure) units.add(r.unit_of_measure); });
-		const uom = units.size === 1 ? Array.from(units)[0] : 'Unit';
-		return 'Unit Cost ($/' + uom + ')';
-	},
-
-	getConsumptionTitle() {
-		const raw = fetch_analytics_data.data || [];
-		const units = new Set();
-		raw.forEach(r => { if (r.unit_of_measure) units.add(r.unit_of_measure); });
-		const uom = units.size === 1 ? Array.from(units)[0] : 'Unit';
-		return 'Consumption (' + uom + ')';
-	},
-
-	buildLineChart(valueKey, yAxisFormatter) {
+	buildLineChart(valueKey) {
 		const data = this.getYearlyMonthlyData();
-		const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-		const years = Object.keys(data).sort().reverse().slice(0, 5);
-		const colors = ['#F9A8D4', '#3B82F6', '#86efac', '#F59E0B', '#8B5CF6'];
+
+		const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+		// REMOVE INCOMPLETE YEARS
+		const years = Object.keys(data)
+			.map(y => Number(y))
+			.filter(y => Object.keys(data[y]).length >= 1)
+			.sort((a, b) => b - a)
+			.slice(0, 5);
+
+		const colors = ["#3B82F6","#F9A8D4","#86efac","#F59E0B","#8B5CF6"];
 
 		const series = years.map((year, idx) => ({
-			name: year,
-			type: 'line',
+			name: String(year),
+			type: "line",
 			smooth: true,
-			data: months.map((_, mi) => {
-				const d = (data[year] || {})[mi + 1];
-				return d ? Number(d[valueKey].toFixed(2)) : null;
+			data: months.map((_, i) => {
+				const d = data[year]?.[i + 1];
+				return d ? Number(d[valueKey].toFixed(2)) : 0;
 			}),
 			itemStyle: { color: colors[idx % colors.length] },
 			lineStyle: { width: 2, color: colors[idx % colors.length] },
-			symbolSize: 6,
 			connectNulls: true
 		}));
 
 		return {
-			backgroundColor: '#1E293B',
+			backgroundColor: "#1E293B",
+
 			tooltip: {
-				trigger: 'axis',
-				backgroundColor: '#0F172A',
-				borderColor: '#334155',
-				textStyle: { color: '#E2E8F0' }
+				trigger: "axis",
+				backgroundColor: "#0F172A",
+				textStyle: { color: "#E2E8F0" }
 			},
+
 			legend: {
 				right: 10,
 				top: 5,
-				orient: 'vertical',
-				textStyle: { color: '#E2E8F0', fontSize: 12 },
-				icon: 'circle',
-				itemWidth: 10,
-				itemHeight: 10,
-				data: years.map((y, i) => ({ name: y, itemStyle: { color: colors[i % colors.length] } }))
+				orient: "vertical",
+				textStyle: { color: "#E2E8F0" },
+				data: years.map(String)
 			},
+
 			grid: { left: 60, right: 100, top: 20, bottom: 30 },
+
 			xAxis: {
-				type: 'category',
+				type: "category",
 				data: months,
-				axisLabel: { color: '#CBD5E1', fontSize: 11 },
-				axisLine: { lineStyle: { color: '#475569' } },
-				splitLine: { show: false }
+				axisLabel: { color: "#CBD5E1" },
+				axisLine: { lineStyle: { color: "#475569" } }
 			},
+
 			yAxis: {
-				type: 'value',
-				axisLabel: {
-					color: '#CBD5E1',
-					formatter: yAxisFormatter
-				},
-				axisLine: { lineStyle: { color: '#475569' } },
-				splitLine: { lineStyle: { color: '#334155', type: 'dashed' } }
+				type: "value",
+				axisLabel: { color: "#CBD5E1" },
+				splitLine: { lineStyle: { color: "#334155", type: "dashed" } }
 			},
-			series: series
+
+			series
 		};
 	},
 
 	getChargesChartConfig() {
-		return this.buildLineChart('charges', function(v) {
-			if (v >= 1000000) return '$' + (v/1000000).toFixed(1) + 'M';
-			if (v >= 1000) return '$' + (v/1000).toFixed(0) + 'K';
-			return '$' + v;
-		});
+		return this.buildLineChart("charges");
 	},
 
 	getUnitCostChartConfig() {
-		return this.buildLineChart('unitCost', function(v) {
-			return '$' + v.toFixed(0);
-		});
+		return this.buildLineChart("unitCost");
 	},
 
 	getConsumptionChartConfig() {
-		return this.buildLineChart('consumption', function(v) {
-			if (v >= 1000000) return (v/1000000).toFixed(0) + 'M';
-			if (v >= 1000) return (v/1000).toFixed(0) + 'K';
-			return v;
-		});
+		return this.buildLineChart("consumption");
 	},
 
 	setDefaults() {
-		if (!appsmith.store.otyViewBy) storeValue('otyViewBy', 'Location');
+		if (!appsmith.store.otyViewBy) {
+			storeValue("otyViewBy", "Location");
+		}
 	}
-}
+};

@@ -1,7 +1,7 @@
 {
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 41,
+  "bottomRow": 44,
   "boxShadow": "none",
   "chartType": "CUSTOM_ECHART",
   "customEChartConfig": "{{OverTheYearsHelper.getChargesChartConfig()}}",

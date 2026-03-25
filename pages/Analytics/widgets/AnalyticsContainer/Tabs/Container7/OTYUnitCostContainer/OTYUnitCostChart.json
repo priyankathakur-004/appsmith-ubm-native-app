@@ -1,7 +1,7 @@
 {
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 53,
+  "bottomRow": 55,
   "boxShadow": "none",
   "chartType": "CUSTOM_ECHART",
   "customEChartConfig": "{{OverTheYearsHelper.getUnitCostChartConfig()}}",
@@ -27,7 +27,7 @@
   "parentRowSpace": 10,
   "renderMode": "CANVAS",
   "rightColumn": 62,
-  "topRow": 5,
+  "topRow": 7,
   "type": "CHART_WIDGET",
   "version": 1,
   "widgetId": "yjghqfm4ly",

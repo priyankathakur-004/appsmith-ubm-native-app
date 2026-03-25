@@ -1,57 +1,58 @@
 {
-  "animateLoading": true,
+  "animateLoading": false,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 3,
+  "bottomRow": 4,
   "boxShadow": "none",
   "dynamicBindingPathList": [],
   "dynamicPropertyPathList": [
     {
-      "key": "menuItems.otyChargesExport.onClick"
+      "key": "menuItems.menuItemx06nx2k67f.onClick"
     },
     {
-      "key": "menuItems.otyChargesTable.onClick"
+      "key": "menuItems.menuItembz6ldwa0c7.onClick"
     }
   ],
   "dynamicTriggerPathList": [
     {
-      "key": "menuItems.otyChargesExport.onClick"
+      "key": "menuItems.menuItemx06nx2k67f.onClick"
     },
     {
-      "key": "menuItems.otyChargesTable.onClick"
+      "key": "menuItems.menuItembz6ldwa0c7.onClick"
     }
   ],
   "iconAlign": "left",
   "iconName": "menu",
   "isLoading": false,
   "isVisible": true,
-  "key": "m5glnclvk6",
+  "key": "swjsxcrnun",
   "leftColumn": 59,
   "menuColor": "#ffffff",
   "menuItems": {
-    "otyChargesExport": {
-      "id": "otyChargesExport",
+    "menuItembz6ldwa0c7": {
+      "id": "menuItembz6ldwa0c7",
       "index": 0,
       "isDisabled": false,
       "isVisible": true,
-      "label": "Export",
+      "label": "Export ",
       "onClick": "{{\nstoreValue('chartName', \"OTY_Charges\");\ndownload(\nObject.values(AnalyticsHelper.getTableData())\n.map(row => Object.values(row).join(\",\"))\n.join(\"\\n\"),\n\"charges.csv\",\n\"text/csv\"\n)}}",
-      "widgetId": "sz3wej3nau"
+      "widgetId": "by839taw50"
     },
-    "otyChargesTable": {
-      "id": "otyChargesTable",
+    "menuItemx06nx2k67f": {
+      "id": "menuItemx06nx2k67f",
       "index": 1,
       "isDisabled": false,
       "isVisible": true,
       "label": "Show as a Table",
       "onClick": "{{\nstoreValue('chartName', \"OTY_Charges\");\nshowModal(showTable.name);}}",
-      "widgetId": "sz3wej3nau"
+      "widgetId": "gr1l75skil"
     }
   },
+  "menuItemsSource": "STATIC",
   "menuVariant": "TERTIARY",
   "mobileBottomRow": 8,
   "mobileLeftColumn": 60,
   "mobileRightColumn": 64,
-  "mobileTopRow": 1,
+  "mobileTopRow": 4,
   "parentColumnSpace": 15,
   "parentId": "2ew6f8lze2",
   "parentRowSpace": 10,
@@ -61,6 +62,6 @@
   "topRow": 0,
   "type": "MENU_BUTTON_WIDGET",
   "version": 1,
-  "widgetId": "sz3wej3nau",
-  "widgetName": "OTYConsumptionMenu"
+  "widgetId": "5nj1iboqpc",
+  "widgetName": "OTYChargesMenu"
 }
